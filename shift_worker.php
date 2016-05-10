@@ -9,7 +9,7 @@
 require_once("calendar.php");
 require_once("database_class.php");
 require_once("schedule.php");
-
+//require_once("login_check.php");
 $year=date("Y");
 $month=date("m");
 $day=num_month($year,$month);
@@ -95,8 +95,8 @@ $db=new database();
 $table="shift_submit";//テーブル名指定	
 
 $column="shift_data";
-$where=" user_id =".$user_id;
-$arr=$db->select($table,$column='', $where='');
+$where=" user_id ="."\"".$user_id."\"";
+$arr=$db->select($table,$column, $where);
 $arr=scheduleToArray($arr);
 	
 	//提出された場合

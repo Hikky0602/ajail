@@ -5,7 +5,7 @@
 <?php
 require_once("database_class.php");
 require_once("calendar.php");
- 
+//require_once("login_check.php");
 //$id="sumtrue";
  
 $year=date("Y");
@@ -17,7 +17,7 @@ $db=new database();
 $table="shift_fix";
 $column="";//アスタリスクになる
 $where=" delete_flg =0";
-$arr=$db->select($table,$column='', $where='');
+$arr=$db->select($table,$column, $where);
 $person=count($arr);
 //$day=31;	//日数（仮）
 $shift=explode(',',$arr[0]["shift_data"]);
