@@ -294,10 +294,11 @@ $dataArr = $_POST;
 
 unset($dataArr["complete"]);
 
-$name      = $dataArr["family_name"].$dataArr["first_name"];
-$name_kana = $dataArr["family_name_kana"].$dataArr["first_name_kana"];
+$family_name      = $dataArr["family_name"];
+$first_name       = $dataArr["first_name"];
+$family_name_kana = $dataArr["family_name_kana"];
+$first_name_kana  = $dataArr["first_name_kana"];
 $birth     = $dataArr["year"].$dataArr["month"].$dataArr["day"];
-//$date = date("Y年n月j日");
 $type = "社員";
 $sex  = $dataArr["sex"];
 $ID   = $dataArr["ID"];
@@ -309,92 +310,77 @@ $shop = $dataArr["shop"];
 
 //echo $name;
 
-$db=new database();
-$table = "regist";
-$col="name";
-$data= $name;
+$link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
+  if(mysqli_connect_errno($link)){
+     echo "inncorect";
+  }
 
-$db->insert($table, $col ,$data); 
-
-
-//$link = mysqli_connect('localhost','user','password','Akifarm_db');
-// if(mysqli_connect_errno($link)){
-//  echo "inncorect";
-// }
-
-//mysql_set_charset('utf8');
-
-/* $sql = "INSERT INTO regist(name,
-                             kana,
-                             sex,
-                             birthday,
-                             regist_ID,
-                             password,
-                             type)
-                      VALUES('$name',
-                             '$name_kana',
+mysql_set_charset('utf8');
+$sql = "INSERT INTO regist( FamilyName,
+                            FirstName,
+                            FamilyName_kana,
+                            FirstName_kana,
+                            Sex,
+                            Birthday,
+                            PhoneNum,
+                            Mail,
+                            User_ID,
+                            Password,
+                            Type)
+                      VALUES('$family_name',
+                             '$first_name',
+                             '$family_name_kana',
+                             '$first_name_kana',
                              '$sex',
-                             '$birth',
+                             ' ',
+                             ' ',
+                             ' ',
                              '$ID',
                              '$password',
-                             '$shop',
                              '$type')";
 
+  echo $sql;
   $result = mysqli_query($link,$sql);
   if(!$result){
    echo "error" . mysqli_error($link);
   }
-*/
-/*try{
-  $dbh = new PDO("mysql:host=localhost;dbname=Akifarm_db;charset=utf8",
-                 "user",
-                 "password"
-                );
-   if($dbh == null){
-     print('inncorrect<br>');
-   }else{
-     print('correct<br>');
-   }
-  $sql = 'INSERT INTO regist(name,
-                             kana,
-                             sex,
-                             birthday,
-                             tel,
-                             mail,
-                             resigt_ID,
-                             password,
-                             type)
-                      values(:name,
-                             :name_kana,
-                             :sex,
-                             :birth,
-                             :tel,
-                             :mail,
-                             :ID,
-                             :password,
-                             :type)';
-                         
- $stmt = $dbh->prepare($sql);
- $stmt->bindValue(':name', $name, PDO::PARAM_STR);
- $stmt->bindValue(':name_kana', $name_kana, PDO::PARAM_STR);
- $stmt->bindValue(':sex', $dataArr['sex'], PDO::PARAM_INT);
- $stmt->bindValue(':birth', $birth, PDO::PARAM_INT);
- $stmt->bindValue(':tel', $tel, PDO::PARAM_STR);
- $stmt->bindValue(':mail', $dataArr['email'], PDO::PARAM_STR);
- $stmt->bindValue(':ID', $dataArr['ID'], PDO::PARAM_STR);
- $stmt->bindValue(':password',$dataArr['password1'], PDO::PARAM_STR);
- $stmt->bindValue(':type',$type,PDO::PARAM_STR);
- $stmt->execute();
+  mysqli_close($link);
 
- while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-  print($result['type']);
-  print($result['password'].'<br>');
- }
-} catch (PDOExeption $e) {
-     print "エラー！:" . $e->getMessage() . "<br/>";
-     die();
-}
-*/
+
+$link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
+  if(mysqli_connect_errno($link)){
+     echo "inncorect";
+  }
+
+mysql_set_charset('utf8');
+$sql = "INSERT INTO workers( FamilyName,
+                            FirstName,
+                            FamilyName_kana,
+                            FirstName_kana,
+                            Sex,
+                            StartTime,
+                            Store,
+                            User_ID,
+                            Password
+                                  )
+                      VALUES('$family_name',
+                             '$first_name',
+                             '$family_name_kana',
+                             '$first_name_kana',
+                             '$sex',
+                             '$birth',
+                             '$shop',
+                             '$ID',
+                             '$password'
+                                 )";
+
+  echo $sql;
+  $result = mysqli_query($link,$sql);
+  if(!$result){
+   echo "error" . mysqli_error($link);
+  }
+
+
 ?>
 
 <html>
