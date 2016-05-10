@@ -62,7 +62,7 @@ if($password_db[0]["Password"] == $password){
 //session destroy
   $_SESSION = array();
  if(isset($_COOKIE[session_name()])){
-      setcookie(session_name(), '', time-42000, '/');
+      setcookie(session_name(), '', time()-42000, '/');
  }
   session_destroy();
 
