@@ -1,7 +1,10 @@
-﻿<!DOCTYPE html >
+<!DOCTYPE html >
 <html>
 
 <head>
+<meta charset='utf8'>
+<meta http-equiv="content-style-type" content="text/css" />
+<link rel="stylesheet" type="text/css" href="shift_worker.css" />
 <?php
 require_once("calendar.php");
 require_once("database_class.php");
@@ -64,13 +67,14 @@ function inputSchedule(){
 <title>sumtrue</title>
 </head>
 <body >
+<div><div>
 名前:<?php echo $name; ?>
 <br>
 シフト締切:前月25日
 <br>
+</div>
 
-
-
+<div>
 <table border="/">
 <tr><?php echo  $year."年".$month. " 月"; ?>
 <th>日
@@ -84,7 +88,7 @@ function inputSchedule(){
 
 
 
-<form method ="post" action="" name="b1">
+<form method ="post" action="" name="b1" class="squareBt">
 <?php
 
 $db=new database();
@@ -137,7 +141,7 @@ $arr=scheduleToArray($arr);
 			//echo "<td>".($j);
 			echo "<td>";
 			
-				echo "<input type=\"button\"  value=".$j."&nbsp&nbsp"." onClick=turn(".($j-1).")    >" ;
+				echo '<input type="button" class=“squareBt”  value='.$j.'&nbsp&nbsp'.' onClick=turn('.($j-1).')    >' ;
 				
 		}
 		echo "</tr>";
@@ -150,9 +154,9 @@ $arr=scheduleToArray($arr);
 			}
 			echo "<td>";
 			if($i<10){
-				echo "<input type=\"button\" name=\"sche[]\" value=".$i."&nbsp&nbsp"." onClick=turn(".($i-1).") >" ;
+				echo "<input type=\"button\" name=\"sche[]\" value=".$i."&nbsp&nbsp"." onClick=turn(".($i-1).") class=“squareBt” >" ;
 			}else{
-				 echo "<input type=\"button\" name=\"sche[]\" value=".$i." onClick=turn(".($i-1).")  >" ;
+				 echo "<input type=\"button\" name=\"sche[]\" value=".$i." onClick=turn(".($i-1).") class=“squareBt” >" ;
 			}
 			if(($i-$j)%7==6){
 				echo "</tr>";
@@ -162,7 +166,7 @@ $arr=scheduleToArray($arr);
 ?>
 </table>
 </form>
-
+</div><div>
 
 <form action=""   >
 <input id ="input" type="button" value="前回のデータ読み込み" onClick="inputSchedule();">
@@ -199,8 +203,12 @@ for($i=0;$i<$day;$i++){
 ?>
 <input type="submit" name="submit" value="提出" /> 
 </form>
+<input type="button" class="squareBt" value="test" />
+<br>赤:空いてない
+<br>青:空いている
+</div></div>
+
 </body>
-赤・・・空いていない　青・・・空いている
 </html>
 
 

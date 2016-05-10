@@ -17,7 +17,7 @@
 <div id="container"><!--外-->
 	<div id="header">
 		<div id="logo"><h1>AKI農場</h1></div>
-		<button class="loginBt" onclick="location.href='shift_worker.php'">login</button>
+		<button class="loginBt" onclick="location.href='login.php'">login</button>
 	</div>
 
 	<div id="topPic">

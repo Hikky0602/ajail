@@ -51,7 +51,7 @@ if($password_db[0]["Password"] == $_POST["password"]){
 /*  if($password_db[0]["Type"]=="お客様")
   header("Location: main.php");
   if($password_db[0]["Type"]=="社員")
-  header("Location: main2.php");*/
+  header("Location: shift_worker.php");*/
 //echo $_SESSION["USERID"];
   exit;
 }else{
@@ -82,6 +82,15 @@ if($password_db[0]["Password"] == $_POST["password"]){
   <label for = "password">パスワード</label><input type="password" id = "password" name = "password" value = "">
   <br><?php echo $errorMessage1;?><br>
   <input type="submit" id="login" name = "login" value = "ログイン">
+  
+  
+  <!-- とりあえずリンクはり  -->
+  
+  <li><a href="regist.php">レジスト</a></li>
+  <li><a href="test.php">TOP</a></li>
+  <li><a href="shift_worker.php">シフト登録</a></li>
+  <li><a href="shift_manager.php">シフト編集</a></li>
+  <li><a href="shift_confirm.php">シフト確認</a></li>
   </form>
   </body>
 </html>
