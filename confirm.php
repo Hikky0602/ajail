@@ -14,14 +14,14 @@ arsort($yearArr);
 if( isset($_POST["confirm"] )   === true ) $mode = "confirm" ;
 if( isset($_POST["back"] )      === true ) $mode = "back" ;
 if( isset($_POST["complete"] )  === true ) $mode = "complete" ;
-//var_dump($mode); 
+ 
 switch($mode){
 case "confirm":
 
      unset($_POST["confirm"]);
 
      $dataArr = $_POST;
-   //  var_dump($dataArr);
+
 
      if( isset($_POST['sex']) === false ) $dataArr['sex']   = "";
 
@@ -34,7 +34,7 @@ case "confirm":
        $selectMonth = $dataArr['month'];
        $selectDay = $dataArr['day'];
 
-if( $err_check == false){
+if( $err_check == false){//登録情報に不備がある時
 
 
 ?>
@@ -206,7 +206,7 @@ Eメールアドレス <?php echo $dataArr['email']; ?> <br>
 
 <?php break; exit;
 
-case "back":
+case "back": //戻るボタン押したとき
 
    $dataArr = $_POST;
 
@@ -311,6 +311,7 @@ $dataArr = $_POST;
 
 unset($dataArr["complete"]);
 
+//tableに insertするための準備
 $hs = new tohash();
 $family_name      = $dataArr["family_name"];
 $first_name       = $dataArr["first_name"];
@@ -318,7 +319,6 @@ $family_name_kana = $dataArr["family_name_kana"];
 $first_name_kana  = $dataArr["first_name_kana"];
 $birth     = $dataArr["year"].$dataArr["month"].$dataArr["day"];
 $tel       = $dataArr['tel1']."-".$dataArr['tel2']."-". $dataArr['tel3'];
-//$date = date("Y年n月j日");
 $type = "お客様";
 $sex  = $dataArr["sex"];
 $email = $dataArr["email"];
@@ -326,9 +326,6 @@ $ID   = $dataArr["ID"];
 $password = $hs->to_hash($dataArr["password1"]);
 $dlt_flg = 0;
 
-//echo $tel . "<br>"; 
-
-//echo $name;
 
 $link = mysqli_connect('localhost','user','password','Akifarm_db');
  if(mysqli_connect_errno($link)){
