@@ -403,7 +403,8 @@ $sql = "INSERT INTO workers( FamilyName,
   </head>
  <body>
    <center>
-   <h1>登録完了しました。</h1>
+   <h1>登録完了しました。</h1><br>
+   <a href= "shift_worker.php">シフトページへ</a><br>
    </center>
  </body>
 </html>

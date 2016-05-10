@@ -425,7 +425,8 @@ mysql_set_charset('utf8');
   </head>
  <body>
    <center>
-   <h1>登録完了しました。</h1>
+   <h1>登録完了しました。</h1><br>
+   <a href="test.php">トップページへ</a><br>
    </center>
  </body>
 </html>
