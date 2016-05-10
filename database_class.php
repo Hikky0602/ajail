@@ -33,7 +33,7 @@ class database{
 		}				
 	}
 	
-	public function select($table,$column='', $where){
+	public function select($table,$column='', $where=''){
 		/* $table・・・DB内の$tableテーブル
 		** $col・・・selectするテーブルの列名
 		** $where・・・where句を指定する場合は加える
@@ -48,7 +48,7 @@ class database{
 			." FROM "
 			.$table
 			.$whereSQL;
-	//	print_r($this->sql);
+		print_r($this->sql);
 		$res=mysqli_query($this->link,$this->sql);
 		$data = array();
                 if(!$res){
@@ -62,7 +62,7 @@ class database{
 		return $data;
 	}
        
-         public function IDcheck($table,$column='',$where){
+         public function IDcheck($table,$column='',$where=''){
                 $data = array();
                 $data = $this->select($table, $column='',$where);
                 $counts = count($data);
