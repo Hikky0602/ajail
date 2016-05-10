@@ -404,8 +404,13 @@ $sql = "INSERT INTO workers( FamilyName,
  <body>
    <center>
    <h1>登録完了しました。</h1><br>
+   <?php if($type==="アルバイト" ){ ?>
    <a href= "shift_worker.php">シフトページへ</a><br>
-   </center>
+   <?php } ?>
+    <?php if($type==="店長" ){ ?>
+   <a href= "shift_manager.php">シフトページへ</a><br>
+   <?php } ?>
+  </center>
  </body>
 </html>
 

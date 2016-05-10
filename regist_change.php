@@ -41,6 +41,8 @@ $dataArr = array(
    'password2'         => ''
 );
 
+///////この部分は再帰的な処理でもっとかんけつにできる。/////
+
 $tel = array();
 $tel = explode( '-', $password_db[0]['PhoneNum']); 
 var_dump($_SESSION["Pass_Raw"]);
@@ -61,6 +63,7 @@ $dataArr['ID']               = $password_db[0]['User_ID'];
 $dataArr['password1']        = $_SESSION["Pass_Raw"];
 $dataArr['password2']        = '';
 
+///////この部分は再帰的な処理でもっとかんけつにできる。/////
 //var_dump($password_db);
 
 ?>  
