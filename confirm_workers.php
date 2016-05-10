@@ -4,6 +4,7 @@
 require_once('error_Check_workers.class.php');
 require_once('initMaster_workers.class.php');
 require_once('database_class.php');
+require_once('To_hash_class.php');
 
 $common        = new error_check();
 
@@ -294,6 +295,8 @@ $dataArr = $_POST;
 
 unset($dataArr["complete"]);
 
+$hs= new tohash();
+
 $family_name      = $dataArr["family_name"];
 $first_name       = $dataArr["first_name"];
 $family_name_kana = $dataArr["family_name_kana"];
@@ -302,7 +305,7 @@ $birth     = $dataArr["year"].$dataArr["month"].$dataArr["day"];
 $type = "社員";
 $sex  = $dataArr["sex"];
 $ID   = $dataArr["ID"];
-$password = $dataArr["password1"];
+$password = $hs->to_hash($dataArr["password1"]);
 $shop = $dataArr["shop"];
 //echo $date;
 

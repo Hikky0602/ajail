@@ -4,6 +4,7 @@
 require_once('error_Check.class.php');
 require_once('initMaster.class.php');
 require_once('database_class.php');
+require_once('To_hash_class.php');
 
 $common        = new error_check();
 
@@ -310,6 +311,7 @@ $dataArr = $_POST;
 
 unset($dataArr["complete"]);
 
+$hs = new tohash();
 $family_name      = $dataArr["family_name"];
 $first_name       = $dataArr["first_name"];
 $family_name_kana = $dataArr["family_name_kana"];
@@ -321,8 +323,8 @@ $type = "社員";
 $sex  = $dataArr["sex"];
 $email = $dataArr["email"];
 $ID   = $dataArr["ID"];
-$password = $dataArr["password1"];
-//echo $date;
+$password = $hs->to_hash($dataArr["password1"]);
+
 
 //echo $tel . "<br>"; 
 
