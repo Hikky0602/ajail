@@ -20,6 +20,7 @@ class error_check{
       $this->sexCheck();
       $this->birthCheck();
       $this->shopCheck();
+      $this->jobCheck();
       $this->IDcheck();
       $this->passwordCheck();
       $this->pwReCheck();
@@ -47,6 +48,10 @@ class error_check{
 
    private function shopCheck(){
        if ( $this->dataArr['shop'] === '') $this->errArr['shop'] = '所属店舗を入力してください。';
+   }
+
+   private function jobCheck(){
+       if ( $this->dataArr['job'] === '') $this->errArr['job'] = '職種を入力してください。';
    }
 
    private function birthCheck(){

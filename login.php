@@ -56,8 +56,12 @@ if($password_db[0]["Password"] == $password){
 //  echo $_SESSION["USERID"];
   if($password_db[0]["Type"]=="お客様")
   header("Location: main.php");
-  if($password_db[0]["Type"]=="社員")
+  if($password_db[0]["Type"]=="アルバイト")
   header("Location: shift_worker.php");
+  if($password_db[0]["Type"]=="店長")
+  header("Location: shift_manager.php");
+
+
 //echo $_SESSION["USERID"];
   exit;
 }else{
