@@ -27,8 +27,6 @@ class database {
 					.$data
 					." ) ";
 					echo "  <br>";
-           // var_dump($this->sql);
-			//echo "  <br>";
 		$result = mysqli_query($this->link,$this->sql);
 		if(!$result){
 			echo "error" . mysqli_error($this->link);
@@ -54,7 +52,7 @@ class database {
 			.$table
 			.$whereSQL;
 		
-		//var_dump($this->sql);
+		//echo $this->sql . "<br>";
 		
 		$res=mysqli_query($this->link,$this->sql);
 		$data = array();
@@ -68,14 +66,14 @@ class database {
 		return $data;
 	}
 	
+
 	public function delete($table,$where=''){
 
 		$whereSQL = ( $where !== '' )?' WHERE  ' . $where :'';
 		$this->sql=" DELETE FROM "
 			.$table
 			.$whereSQL;
-		
-		//var_dump($this->sql);
+
 		$result = mysqli_query($this->link,$this->sql);
 		if(!$result){
 			echo "error" . mysqli_error($this->link);
@@ -84,7 +82,7 @@ class database {
 			return true;
 		}	
 	}
-	
+
 	 public function IDcheck($table,$column='',$where=''){
                 $data = array();
                 $data = $this->select($table, $column,$where);
@@ -93,14 +91,27 @@ class database {
 					return 1;
                 }else{
 					return 0; 
-				}
+	}
                 
 	}
-       
-      
-	
-}
 
+       
+
+
+   
+         public function update($table, $setcol, $value1, $wherecol, $value2){
+                $this->sql=" UPDATE " . $table . " SET " . $setcol . " = " . $value1 . " WHERE " . $wherecol . " = '" . $value2  ."'";   
+                $result = mysqli_query($this->link, $this->sql);
+                echo $this->sql;
+                if(!$result){
+                    echo "error" . mysqli_error($this->link);
+                    return false;
+                }else{
+                    return true;
+	        }
+         }
+
+}
 
 
 

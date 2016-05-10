@@ -324,7 +324,7 @@ $sex  = $dataArr["sex"];
 $email = $dataArr["email"];
 $ID   = $dataArr["ID"];
 $password = $hs->to_hash($dataArr["password1"]);
-
+$dlt_flg = 0;
 
 //echo $tel . "<br>"; 
 
@@ -347,7 +347,8 @@ mysql_set_charset('utf8');
                              Mail,
                              User_ID,
                              Password,
-                             Type)
+                             Type,
+                             dlt_flg)
                       VALUES('$family_name',
                              '$first_name',
                              '$family_name_kana',
@@ -358,7 +359,8 @@ mysql_set_charset('utf8');
                              '$email',
                              '$ID',
                              '$password',
-                             '$type')";
+                             '$type',
+                             '$dlt_flg')";
 
   echo $sql;
   $result = mysqli_query($link,$sql);
