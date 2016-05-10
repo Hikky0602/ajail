@@ -1,4 +1,11 @@
+<?php
 
+$link = mysqli_connect('locaol','user', 'password','Akifarm_db');
+
+
+
+
+?>
 
 
 <!DOCTYPE html>
@@ -12,9 +19,8 @@ require_once("database_class.php");
 //require_once("login_check.php");
 
 $db=new database();
-$table="shift_submit";//テーブル名指定	
+$table="shift_submit_proto";//テーブル名指定	
 
-$where=" delete_flg =0";
 $column="";
 $arr=$db->select($table,$column, $where);
 
