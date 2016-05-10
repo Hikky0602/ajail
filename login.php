@@ -48,10 +48,10 @@ if($password_db[0]["Password"] == $_POST["password"]){
 //  $_SESSION["USERID"] = $_POST["userid"];
   $_SESSION["USERID"] = $password_db[0]["FamilyName"];
 //  echo $_SESSION["USERID"];
-/*  if($password_db[0]["Type"]=="お客様")
+  if($password_db[0]["Type"]=="お客様")
   header("Location: main.php");
   if($password_db[0]["Type"]=="社員")
-  header("Location: shift_worker.php");*/
+  header("Location: shift_worker.php");
 //echo $_SESSION["USERID"];
   exit;
 }else{
@@ -86,11 +86,11 @@ if($password_db[0]["Password"] == $_POST["password"]){
   
   <!-- とりあえずリンクはり  -->
   
-  <li><a href="regist.php">レジスト</a></li>
+ <!-- <li><a href="regist.php">レジスト</a></li>
   <li><a href="test.php">TOP</a></li>
   <li><a href="shift_worker.php">シフト登録</a></li>
   <li><a href="shift_manager.php">シフト編集</a></li>
-  <li><a href="shift_confirm.php">シフト確認</a></li>
+  <li><a href="shift_confirm.php">シフト確認</a></li>-->
   </form>
   </body>
 </html>
