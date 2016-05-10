@@ -21,13 +21,15 @@
 
 
 
-<?php if(){	?>
+<?php 
+session_start();
+if(isset($_SESSION["USERID"])){	?>
 <!--ログイン時    --->
 <button class="loginBt" onclick="location.href='logout.php'">logout</button>
-<?php else{	?>
+<?php }else{	?>
 <!--非ログイン時  --->
 <button class="loginBt" onclick="location.href='login.php'">login</button>
-<?php ?>
+<?php } ?>
 
 
 </div>

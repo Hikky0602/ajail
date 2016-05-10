@@ -64,11 +64,11 @@ if($password_db[0]["Password"] == $password){
 
 //セッションに苗字を入れる「〜様ようこそ」用
   session_regenerate_id(true);
-  $_SESSION["USERID"] = $password_db[0]["FamilyName"];
+  $_SESSION["NAME"] = $password_db[0]["FamilyName"];
 
 //タイプに応じて飛ぶページをカエル
   if($password_db[0]["Type"]=="お客様")
-  header("Location: main.php");
+  header("Location: test.php");
   if($password_db[0]["Type"]=="アルバイト")
   header("Location: shift_worker.php");
   if($password_db[0]["Type"]=="店長")
