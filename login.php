@@ -104,7 +104,9 @@ if($password_db[0]["Password"] == $password){
   <label for = "password">パスワード</label><input type="password" id = "password" name = "password" value = "">
   <br><?php echo $errorMessage1;?><br>
   <input type="submit" id="login" name = "login" value = "ログイン"><br>
+   <a href="regist.php" >新規登録はこちら</a><br>   
    <a href="regist_delete.php" >退会はこちら</a><br>   
+   <a href="regist_workers.php" >社員登録はこちら（仮）</a><br>   
    </form>
   </body>
 </html>
