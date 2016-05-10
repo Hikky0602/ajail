@@ -3,6 +3,7 @@
 
 require_once('error_Check.class.php');
 require_once('initMaster.class.php');
+require_once('database_class.php');
 
 $common        = new error_check();
 

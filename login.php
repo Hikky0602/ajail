@@ -37,7 +37,8 @@ $_SESSION["USERID"] = $_POST["userid"];
 $password_db = array();
 $password_db = $db->select($table, $column, $where);  
 //var_dump($password_db);
-
+$arart = $db->IDCheck($table, $column, $where);
+echo $arart;
 $counts = count($password_db);
 //echo "$counts";
 if($counts>=1){
@@ -47,10 +48,10 @@ if($password_db[0]["Password"] == $_POST["password"]){
 //  $_SESSION["USERID"] = $_POST["userid"];
   $_SESSION["USERID"] = $password_db[0]["FamilyName"];
 //  echo $_SESSION["USERID"];
-  if($password_db[0]["Type"]=="お客様")
+/*  if($password_db[0]["Type"]=="お客様")
   header("Location: main.php");
   if($password_db[0]["Type"]=="社員")
-  header("Location: main2.php");
+  header("Location: main2.php");*/
 //echo $_SESSION["USERID"];
   exit;
 }else{

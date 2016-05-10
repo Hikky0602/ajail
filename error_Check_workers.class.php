@@ -1,5 +1,6 @@
 <?php
 
+require_once('database_class.php');
 
 class error_check{
     private $dataArr = array();
@@ -66,10 +67,22 @@ class error_check{
 
    }
 
-   private function IDCheck(){ if( preg_match('/^[a-zA-Z0-9]{6,}$/', $this->dataArr["ID"]) === 0 ){
+
+      private function IDCheck(){ if( preg_match('/^[a-zA-Z0-9]{6,}$/', $this->dataArr["ID"]) === 0 ){
       $this->errArr['ID']= 'IDは半角英数字6文字以上で入力してください';
+   }else{ 
+      $db= new database();
+      $table= "regist";
+      $column = "";
+      $where= "User_ID= '" . $this->dataArr["ID"] ."'";
+      $arart = $db->IDCheck($table, $column, $where);
+      if($arart===1){$this->errArr['ID']= 'このIDは既に登録されています。';}
    }
+
    }
+
+
+
 
    private function passwordCheck(){ if(preg_match('/^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])[0-9a-zA-Z\-]{8,}$/', $this->dataArr["password1"])===0 ) {
       $this->errArr['password1']= 'passwordは半角英数字、大文字小文字数字を混ぜた8文字以上のものを入力してください。';
