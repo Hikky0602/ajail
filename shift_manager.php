@@ -41,11 +41,11 @@ function turn(element){
 	var val=document.b2.elements[element].value;
 	if(val=="A"){
 		document.b2.elements[element].value="B";
-		document.b3.elements[element].value=3;
+		document.b3.elements[element].value="B";
 		setColor(element);
 	}else if(val=="B"){
 		document.b2.elements[element].value="C";
-		document.b3.elements[element].value=2;
+		document.b3.elements[element].value="C";
 		setColor(element);
 	}else if(val=="C"){
 		document.b2.elements[element].value="o";
@@ -59,7 +59,7 @@ function turn(element){
 
 	}else if(val=="x"){
 		document.b2.elements[element].value="A";
-		document.b3.elements[element].value=4;
+		document.b3.elements[element].value="A";
 		setColor(element);
 	}
 
@@ -83,14 +83,14 @@ function setColor(i){
 	var val=document.b2.elements[i].value;
 	if(val=="A"){
 		document.b2.elements[i].style.background="yellow";
-		document.b3.elements[i].value=4;
+		document.b3.elements[i].value="A";
 		
 	}else if(val=="B"){
 		document.b2.elements[i].style.background="blue";
-		document.b3.elements[i].value=3;
+		document.b3.elements[i].value="B";
 	}else if(val=="C"){
 		document.b2.elements[i].style.background="rgb(0,250,0)";
-		document.b3.elements[i].value=2;
+		document.b3.elements[i].value="C";
 	}else if(val=="o"){
 		document.b2.elements[i].style.background="white";
 		document.b2.elements[i].value="o";
@@ -127,15 +127,13 @@ function setColor(i){
 <?php 
 //****スケジュール作成****************************/////////////
 
-
-
 	$sup=array();//sup[i][j] i in person set, j in day set  人iがj日に供給できるとき1もしくは店舗名、そうでなければ0
 	$dem=array();//dem[j] j in day set j日の需要量
 	$year=array();//year[i] i in person set 人iの勤続年数
 	
 if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
-
-	
+		$sol2=array();
+	if(isset($_POST["submit"])){
 		
 	for($j=0;$j<$day;$j++){
 		for($i=0;$i<$person;$i++){
@@ -169,9 +167,12 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 	$problem->setYear($year);
 	$sol1=$problem->solve_step1();
 	$sol2=$problem->solve_step2($sol1);
+	
+
+	
 //******************************************//
 
-
+//******************以下は出力**********//
 	
 	for ($j=0;$j<$day;$j++ ){
 		//dayの出力
@@ -200,9 +201,22 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 	echo"</tr>";
 
 	}
+	}
+	
+	//*****************************
+	//本当はsendToDBが押されたときのdocument.b3.elements[i].valueの値をDBに投げたい
+	//しかし、javascriptのdocument.b3.elements[i].valueの取り出し方がわからない
+	//*********************//
+	
 	if(isset($_POST["sendToDB"])){
 		//シフト決定ボタンが押されたとき
-		
+		$sche=array();
+		for($i=0;$i<$person;$i++){
+			for($j=0;$j<$day;$j++){
+				//スケジュール表のデータをsupに代入
+				$sche[$i][$j]=$_POST["schedule"][$i*$day+$j];
+			}
+		}
 		
 		$db=new database();
 		$table=	"shift_fix";//テーブル名指定
@@ -211,27 +225,28 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 		$col="name,user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
 		
 		for($i=0;$i<$person;$i++){
-		$shift_data=implode("," , $sol2[$i]);//insertするvalue指定
-		//echo $shift_data."<br>";
-		$data="\"".$arr[$i]["name"]."\""
-				.","
-				."\"".$arr[$i]["user_id"]."\""
-				.","
-				.$arr[$i]["shift_year"]
-				.","
-				.$arr[$i]["shift_month"]
-				.","
-				."\"".$shift_data."\""
-				.","."0"
-				;
-		$db->insert($table,$col,$data);
-	
-		
+			$shift_data=implode("," , $sche[$i]);//insertするvalue指定
+			$data="\"".$arr[$i]["name"]."\""
+					.","
+					."\"".$arr[$i]["user_id"]."\""
+					.","
+					.$arr[$i]["shift_year"]
+					.","
+					.$arr[$i]["shift_month"]
+					.","
+					."\"".$shift_data."\""
+					.","."0"
+					;
+					
+			$db->insert($table,$col,$data);
 		}
-		//header("Location:http://localhost/aki_farm/shift_confirm.php");
-		//exit();
+		header("Location:http://localhost/aki_farm/shift_confirm.php");
+		exit();
 
-	}	
+
+		
+	}
+	
 }else{
 	//makeボタンが押される前に実行される
 
@@ -246,16 +261,11 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 		$shift=explode(',',$arr[$i]["shift_data"]);
 		for($j=0;$j<$day;$j++){
 			//表データボタン作成
-			
-			
-			
+				
 			echo "<td>";
-			//echo "$shift[$j] <br>";
 			if($shift[$j]==1){
-				//echo "aa";
 				echo "<input type=\"button\"  value="."\"○\"". " onClick=turn(".($j+$i*$day).")>";
 			}else{
-				//echo "bb";
 				echo "<input type=\"button\"  value="."\"x\"". " onClick=turn(".($j+$i*$day).")>";
 			}
 		}
@@ -274,20 +284,31 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 <!-- postする値をhiddenタグで作成  -->
 <form method="post" action="" name="b3">
 <?php
+
+
 	//***hiddenタグでスケジュールの値を保存******////
 	echo "<script> var index=0;</script>";
 	for($i=0;$i<$person;$i++){
 		$shift=explode(',',$arr[$i]["shift_data"]);
 	for($j=0;$j<$day;$j++){
-		if($shift[$j]==1){
-				//echo "aa";
-				echo "<input type=\"hidden\"  value=1 name=\"schedule[]\" )>";
+		if(isset($_POST["submit"])&&isset($_POST["schedule"])){
+			
+			if($sol2[$i][$j]==="A"){
+				echo "<input type=\"hidden\"  value=A name=\"schedule[]\" )>";
+			}else if($sol2[$i][$j]==="B"){
+				echo "<input type=\"hidden\"  value=B  name=\"schedule[]\" )>";
+			}else if($sol2[$i][$j]==="C"){
+				echo "<input type=\"hidden\"  value=C  name=\"schedule[]\" )>";
 			}else{
-				//echo "bb";
 				echo "<input type=\"hidden\"  value=0  name=\"schedule[]\" )>";
 			}
-		//echo "<input type=\"hidden\" name=\"schedule[]\" >";
-		//echo "<script>setColor(index)</script>";
+		}else{
+			if($shift[$j]==1){
+				echo "<input type=\"hidden\"  value=1 name=\"schedule[]\" )>";
+			}else{
+				echo "<input type=\"hidden\"  value=0  name=\"schedule[]\" )>";
+			}
+		}
 		echo "<script>index++;</script>";
 	}
 }
