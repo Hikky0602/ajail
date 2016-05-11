@@ -89,7 +89,6 @@ function setColor(i){
 		document.b3.elements[i].value=0;	
 	}
 	
-
 	
 }
 
@@ -209,8 +208,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 					
 			$db->insert($table,$col,$data);
 		}
-//		header("Location:http://localhost/ajail/shift_confirm.php");
-		header("Location:http:./shift_confirm.php");
+		header("Location:http://localhost/aki_farm/shift_confirm.php");
 		exit();	
 	}
 }else{
@@ -238,16 +236,42 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 	echo"</tr>";
 	}	
 	
-}
 	
+}
 ?>
+
 
 <tr>
 <td>　</td>
 </tr>
 
+<tr>
+<td>店舗</td>
+</tr>
+<?php
+for($s=0;$s<count($shop);$s++){
+		//人の出力
+		echo "<tr>";
+		echo "<td>".$shop[$s];
+		for($j=0;$j<$day;$j++){
+			//表データボタン作成
+				
+			echo "<td>";
+			if($shift[$j]==1){
+				echo "<input type=\"button\"  value="."\"○\">";
+			}else{
+				echo "<input type=\"button\"  value="."\"x\" >";
+			}
+		}
+	echo"</tr>";
+	}	
+?>
 </table>
 
+
+</table>
+
+</form>
 
 
 <!-- postする値をhiddenタグで作成  -->
@@ -283,12 +307,12 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 ?>
 <input type="submit" name="submit" value="シフト作成">
 <input type="submit" name="sendToDB" value="シフト決定">
-<br>
-<br>
+
+
 <!--  未完成  -->
 <form  action="" name="b4">
 <table border="/">
-<tr>提出されたスケジュール
+<tr>各店舗
 <th>名前
 <?php
 for ($j=0;$j<$day;$j++ ){
@@ -305,9 +329,9 @@ for ($j=0;$j<$day;$j++ ){
 				
 			echo "<td>";
 			if($shift[$j]==1){
-				echo "<input type=\"button\"  value="."\"○\") >";
+				echo "<input type=\"button\"  value="."\"○\">";
 			}else{
-				echo "<input type=\"button\"  value=\"&nbsp \" )>";
+				echo "<input type=\"button\"  value="."\"x\">";
 			}
 		}
 	echo"</tr>";
