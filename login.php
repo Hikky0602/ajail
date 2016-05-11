@@ -73,7 +73,7 @@ if($password_db[0]["Password"] == $password){
   if($password_db[0]["Type"]=="アルバイト")
   header("Location: shift_worker.php");
   if($password_db[0]["Type"]=="店長")
-  header("Location: shift_manager.php");
+  header("Location: admin_top.php");
 
   exit;
 }else{ //error Message
