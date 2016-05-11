@@ -1,4 +1,4 @@
-<?php 
+ï»¿<?php 
 
 //require_once("BaseModel.php");
 //class database extends BaseModel{
@@ -13,13 +13,13 @@ class database {
 		//mysql_set_charset('utf8');
 	}
 	 public function insert($table,$col,$data){
-		/* $tableEEEDB“à‚Ì$tableƒe[ƒuƒ‹
-		** $colEEEinsert‚·‚éƒe[ƒuƒ‹‚Ì—ñ–¼
-		** $dataEEEinsert‚·‚é’li$col‚Æ‘Î‰‚³‚¹‚éj
+		/* $tableãƒ»ãƒ»ãƒ»DBå†…ã®$tableãƒ†ãƒ¼ãƒ–ãƒ«
+		** $colãƒ»ãƒ»ãƒ»insertã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«ã®åˆ—å
+		** $dataãƒ»ãƒ»ãƒ»insertã™ã‚‹å€¤ï¼ˆ$colã¨å¯¾å¿œã•ã›ã‚‹ï¼‰
 		*/
-		//•Ô‚è’l trueEEEinsert¬Œ÷@falseEEEinsert¸”s
+		//è¿”ã‚Šå€¤ trueãƒ»ãƒ»ãƒ»insertæˆåŠŸã€€falseãƒ»ãƒ»ãƒ»insertå¤±æ•—
 		
-		/* ƒe[ƒuƒ‹–¼‚Ìsql */
+		/* ãƒ†ãƒ¼ãƒ–ãƒ«åã®sql */
 			$this->sql="INSERT INTO ".$table."( "
 					.$col
 					." ) "
@@ -39,12 +39,12 @@ class database {
 	}
 	
 	public function select($table,$column='', $where=''){
-		/* $tableEEEDB“à‚Ì$tableƒe[ƒuƒ‹
-		** $colEEEselect‚·‚éƒe[ƒuƒ‹‚Ì—ñ–¼
-		** $whereEEEwhere‹å‚ğw’è‚·‚éê‡‚Í‰Á‚¦‚é
-		** $arrValEEE
+		/* $tableãƒ»ãƒ»ãƒ»DBå†…ã®$tableãƒ†ãƒ¼ãƒ–ãƒ«
+		** $colãƒ»ãƒ»ãƒ»selectã™ã‚‹ãƒ†ãƒ¼ãƒ–ãƒ«ã®åˆ—å
+		** $whereãƒ»ãƒ»ãƒ»whereå¥ã‚’æŒ‡å®šã™ã‚‹å ´åˆã¯åŠ ãˆã‚‹
+		** $arrValãƒ»ãƒ»ãƒ»
 		*/
-		//•Ô‚è’l selectŒ‹‰Ê
+		//è¿”ã‚Šå€¤ selectçµæœ
 		
 		$columnKey =( $column !=='') ? $column : "*" ; 
 		$whereSQL = ( $where !== '' )?' WHERE  ' . $where :'';
