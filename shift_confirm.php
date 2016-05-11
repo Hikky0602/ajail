@@ -17,7 +17,7 @@ $db=new database();
 $table="shift_fix";
 $column="";//アスタリスクになる
 $where=" delete_flg =0";
-$arr=$db->select($table,$column='', $where='');
+$arr=$db->select($table,$column, $where);
 $person=count($arr);
 //$day=31;	//日数（仮）
 $shift=explode(',',$arr[0]["shift_data"]);
@@ -46,7 +46,6 @@ function compare_row($matrix , $str, $j){
 
 <br>
 <br>
-提出されたスケジュール<br>
 <?php echo $arr[0]["shift_year"]."年  ".$arr[0]["shift_month"]."月"   ?>
 <table border="/">
 <th>名前
