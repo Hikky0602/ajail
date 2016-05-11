@@ -9,7 +9,7 @@
 require_once("calendar.php");
 require_once("database_class.php");
 require_once("schedule.php");
-require_once("login_check.php");
+//require_once("login_check.php");
 
 //表示するyearとmonthを定める
 $year=date("Y");
@@ -126,7 +126,7 @@ function inputSchedule(){
 
 <form method ="post" action="" name="b1" class="squareBt">
 <?php
-//SQL文で最後に\Gを加えると列ごとに表示
+
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	
@@ -197,6 +197,7 @@ $table="shift_submit";//テーブル名指定
 
 <form action=""   >
 <input id ="input" type="button" value="前回のデータ読み込み" onClick="inputSchedule();">
+<input type="hidden" name="load_month" value=<?php  echo $month; ?>>
 </form>
 
 
@@ -209,6 +210,13 @@ $table="shift_submit";//テーブル名指定
 
 $column="shift_data";
 //$where=" user_id ="."\"".$user_id."\"";
+//$where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $month;
+
+//var_dump($_POST);
+if(isset($_POST["month_submit"])){
+	var_dump($_POST);
+	$month=$_POST["month_submit"];
+}
 $where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $month;
 $arr=$db->select($table,$column, $where);
 $arr=scheduleToArray($arr);
