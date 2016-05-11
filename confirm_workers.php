@@ -5,6 +5,7 @@ require_once('error_Check_workers.class.php');
 require_once('initMaster_workers.class.php');
 require_once('database_class.php');
 require_once('To_hash_class.php');
+require_once('make_shift_class.php');
 
 $common        = new error_check();
 
@@ -181,7 +182,7 @@ if( $err_check == false){
 
 所属店舗  <?php  echo $dataArr['shop'][0]; ?><br>
 
-職種      <?php echo $dataArr["job"];   ?><br>
+職種      <?php echo $dataArr["job"][0];   ?><br>
 
         <input type = "submit" name = "back" value = "戻る"/>
         <input type = "submit" name = "complete" value = "登録完了"/><br>  
@@ -328,6 +329,7 @@ $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
      echo "inncorect";
   }
 
+//into regist_table
 //mysql_set_charset('utf8');
 $sql = "INSERT INTO regist( FamilyName,
                             FirstName,
@@ -364,7 +366,7 @@ $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
   if(mysqli_connect_errno($link)){
      echo "inncorect";
   }
-
+//into workers
 //mysql_set_charset('utf8');
 $sql = "INSERT INTO workers( FamilyName,
                             FirstName,
@@ -393,7 +395,26 @@ $sql = "INSERT INTO workers( FamilyName,
    echo "error" . mysqli_error($link);
   }
 
+//into shift_submit
 
+for($i=1;$i<=12;$i++){
+  $db     = new database();
+  $tbl    = "shift_submit";
+  $col    = "name, user_id, shift_year, shift_month, shift_data, submit_time, delete_flg";
+  $oppai  = make_shift(2016,$i);
+  $data   = "'','". $ID . "' ,'', '". $i ."','" . $oppai ."' , '',''";
+
+  $result= $db->insert($tbl, $col, $data); 
+}
+ 
+for($i=1;$i<=12;$i++){
+  $tbl    = "shift_fix";
+  $col    = "name, user_id, shift_year, shift_month, shift_data, fix_time, delete_flg";
+  $oppai  = make_shift(2016, $i);
+  $data   = "'','". $ID . "' ,'', '". $i ."','" . $oppai ."' , '',''";
+
+  $result = $db->insert($tbl, $col, $data);
+}
 ?>
 
 <html>
