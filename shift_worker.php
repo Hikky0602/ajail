@@ -49,19 +49,13 @@ function inputSchedule(){
 		}else{
 				document.b1.elements[i].style.background="red";
 				document.hb.elements[i].value=0;
-		}
-
-		
+		}	
 	}
-	
-	
+		
 }
-
 
 // -->
 </script>
-
-
 
 <meta charset="utf-8">
 <title>sumtrue</title>
@@ -95,8 +89,8 @@ $db=new database();
 $table="shift_submit";//テーブル名指定	
 
 $column="shift_data";
-$where=" user_id =".$user_id;
-$arr=$db->select($table,$column='', $where='');
+$where=" user_id ="."\"".$user_id."\"";
+$arr=$db->select($table,$column, $where);
 $arr=scheduleToArray($arr);
 	
 	//提出された場合
