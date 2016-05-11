@@ -201,7 +201,7 @@ for($i=0;$i<$day;$i++){
 
 	
 ?>
-<input type="submit" name="submit" value="提出" /> 
+<input type="submit" name="submit" value="提出" onClick="alert('シフトを提出しました。');" /> 
 </form>
 <input type="button" class="squareBt" value="test" />
 <br>赤:空いてない
