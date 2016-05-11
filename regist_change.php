@@ -72,10 +72,14 @@ $dataArr['password2']        = '';
 
   //     $common->htmlEncode( $dataArr );        
 
+
+
        $selectYear = $dataArr['year'];
        $selectMonth = $dataArr['month'];
        $selectDay = $dataArr['day'];
+  $mode="first";
 
+  if($mode=="first"){
 ?>
 
 <!-- 最初に表示 --!>
@@ -113,8 +117,8 @@ Eメールアドレス <?php echo $dataArr['email']; ?> <br>
 
 パスワード <?php echo "***********"/*$dataArr['password1']*/; ?> <br>
 
-        <input type = "submit" name = "back" value = "変更"/>
-        <input type = "submit" name = "complete" value = "登録完了"/><br>  
+        <input type = "submit" name = "back" value = "項目表示"/>
+        <input type = "submit" name = "complete" value = "変更完了"/><br>  
         <?php foreach( $dataArr as $key => $value) { ?>
           <?php if(is_array($value)) { ?> 
             <?php foreach( $value as $v ){ ?>
@@ -129,6 +133,7 @@ Eメールアドレス <?php echo $dataArr['email']; ?> <br>
 </html>  
 
 <?php
+ }
 $common        = new error_check();
 
 list( $yearArr, $monthArr, $dayArr ) = initMaster::getDate();
@@ -452,7 +457,7 @@ $link = mysqli_connect('localhost','user','password','Akifarm_db');
   echo "inncorect";
  }
 
-//mysql_set_charset('utf8');
+mysql_set_charset('utf8');
 
  $sql = "INSERT INTO regist( FamilyName,
                              FirstName,
@@ -540,11 +545,11 @@ $link = mysqli_connect('localhost','user','password','Akifarm_db');
 <html>
   <head>
      <meta charset = "utf-8"/>
-       <title>登録完了</title>
+       <title>変更完了</title>
   </head>
  <body>
    <center>
-   <h1>登録完了しました。</h1><br>
+   <h1>変更完了しました。</h1><br>
    <a href="test.php">トップページへ</a><br>
    </center>
  </body>

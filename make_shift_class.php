@@ -12,7 +12,7 @@ function make_shift($year, $month){
 $days = num_month($year,$month);
 
 $datas = array();
-   for($i=0;$i<=$days;$i++)
+   for($i=0;$i<$days;$i++)
        $datas[$i]=0;
 
 $data = implode(",", $datas);
