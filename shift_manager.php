@@ -61,13 +61,15 @@ function sum_row(shop,j){
 	var ans=0;
 	var itr=0;
 	for(itr=0;itr< <?php echo $person;?> ; itr++){
-		var val=document.b2.elements[j+itr*<?php echo $person; ?>].value;	
+		var val=document.b2.elements[j+itr*<?php echo $day; ?>].value;	
 		if(val==shop){
 			ans++;
 		}
 	}
 	return ans;
 }
+
+
 
 function setColor(i){
 	var val=document.b2.elements[i].value;
@@ -89,6 +91,11 @@ function setColor(i){
 		document.b2.elements[i].value="x";
 		document.b3.elements[i].value=0;	
 	}
+	
+	//document.form_shop.elements[i-i/30].value=sum_row("A",i-i/30);
+	document.form_shop.elements[i-Math.floor((i/<?php echo $day; ?>))*<?php echo $day; ?>].value=sum_row("A",i-Math.floor((i/<?php echo $day; ?>))*<?php echo $day; ?>);
+	document.form_shop.elements[<?php echo $day; ?>+i-Math.floor((i/<?php echo $day; ?>))*<?php echo $day; ?>].value=sum_row("B",i-Math.floor((i/<?php echo $day; ?>))*<?php echo $day; ?>);
+	document.form_shop.elements[<?php echo 2*$day; ?>+i-Math.floor((i/<?php echo $day; ?>))*<?php echo $day; ?>].value=sum_row("C",i-Math.floor((i/<?php echo $day; ?>))*<?php echo $day; ?>);
 	
 	
 }
@@ -240,7 +247,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 	
 }
 ?>
-
+</form>
 
 <tr>
 <td>　</td>
@@ -249,6 +256,8 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 <tr>
 <td>店舗</td>
 </tr>
+
+<form   name="form_shop">
 <?php
 for($s=0;$s<count($shop);$s++){
 		//人の出力
@@ -258,22 +267,30 @@ for($s=0;$s<count($shop);$s++){
 			//表データボタン作成
 				
 			echo "<td>";
-			if($shift[$j]==1){
-				echo "<input type=\"button\"  value="."\"○\">";
+	
+			
+			if(isset($_POST["submit"])&&isset($_POST["schedule"])){	
+				echo "<input type=\"button\"   value=". shop_supply($shop[$s],$j,$sol2,$person) .">";
 			}else{
-				echo "<input type=\"button\"  value="."\"x\" >";
+				echo "<input type=\"button\"  value=0>";	
 			}
 		}
 	echo"</tr>";
-	}	
+}
+
+function shop_supply($shop,$j,$arr,$person){
+	$ans=0;
+	for($itr=0;$itr< $person;  $itr++){
+		$val=$arr[$itr][$j];	
+		if($val===$shop){
+			$ans++;
+		}
+	}
+	return $ans;
+}	
 ?>
 </table>
-
-
-</table>
-
 </form>
-
 
 <!-- postする値をhiddenタグで作成  -->
 <form method="post" action="" name="b3">
@@ -308,7 +325,7 @@ for($s=0;$s<count($shop);$s++){
 ?>
 <input type="submit" name="submit" value="シフト作成">
 <input type="submit" name="sendToDB" value="シフト決定">
-
+</form>
 
 <!--  未完成  -->
 <form  action="" name="b4">
