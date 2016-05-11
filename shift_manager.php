@@ -10,7 +10,7 @@
 
 require_once("shiibashi.php");
 require_once("database_class.php");
-
+require_once("login_check.php");
 
 
 
