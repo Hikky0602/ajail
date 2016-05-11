@@ -67,7 +67,19 @@ if($password_db[0]["Password"] == $password){
   $_SESSION["NAME"] = $password_db[0]["FamilyName"];
   $_SESSION["FIRSTNAME"]=$password_db[0]["FirstName"];
   $_SESSION["ID"]=$password_db[0]["User_ID"];
+  $_SESSION["TYPE"] = $password_db[0]["Type"];
 //タイプに応じて飛ぶページをカエル
+ /*
+  if($password_db[0]["Type"]=="お客様"){
+     if(isset($_SESSION){
+            header("Location : reserved.php");
+     }else{
+            header("Location : test.php");
+     }
+  } 
+
+ */ 
+
   if($password_db[0]["Type"]=="お客様")
   header("Location: test.php");
   if($password_db[0]["Type"]=="アルバイト")
