@@ -1,6 +1,3 @@
-
-
-
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,10 +10,9 @@ require_once("calendar.php");
 require_once("login_check.php");
 
 
-
+///表示するyearとmonthを定める
 $year=date("Y");
 $month=date("m");
-
 if(isset($_POST["month"])){
 	$month=$_POST["month"];
 }
@@ -32,25 +28,29 @@ if(isset($_POST["next"])){
 }else if(isset($_POST["now"])){
 	$method="now";
 }
+
+//年月計算
 $year=turnCalendar($year,$month,$method)[0];
 $month=turnCalendar($year,$month,$method)[1];
-
-
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	
 
+//月に提出されたデータをすべて取り出す
 $where=" shift_month=". $month;
 $column="";
 $arr=$db->select($table,$column, $where);
 
-
-//$person=15;	//人の数（仮）
+//人数の長さ
 $person=count($arr);
-//$day=31;	//日数（仮）
+
+//文字列の分解
 $shift=explode(',',$arr[0]["shift_data"]);
-//$day=count($shift);
+
+//月の日数
 $day=num_month($year,$month);
+
+//店舗情報
 $shop=array("A","B","C");
 
 
@@ -193,7 +193,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 		$problem->setShop($shop);
 		$problem->setYear($year);
 		$sol1=$problem->solve_step1();
-		$sol2=$problem->solve_step2($sol1);
+		$sol2=$problem->solve_step2($sol1);//最終的に出力される解
 	
 //******************************************//
 
@@ -235,6 +235,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 			}
 		}
 		
+		//すでに
 		$db=new database();
 		$table=	"shift_fix";//テーブル名指定
 		$column="COUNT(*) ";
@@ -274,7 +275,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 			}
 			
 		}
-		header("Location:http://localhost/aki_farm/shift_confirm.php");
+		header("Location:./shift_confirm.php");
 		exit();	
 	}
 }else{

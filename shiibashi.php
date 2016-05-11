@@ -1,6 +1,9 @@
 <?php
 	
 class shiibashi{
+	/*
+	input matrix S, vector d,vector shop,vector shop
+	*/
 	private $supply;//supplyは行列（人数＊供給）
 	private $demand;//demandはベクトル（需要）
 	private $shop;//店舗ベクトル
@@ -37,6 +40,7 @@ class shiibashi{
 		return $this->year;
 	}
 	
+	//solveする関数
 	public function run(){
 		//echo "00";
 		$sol1=$this->solve_step1();
@@ -46,6 +50,10 @@ class shiibashi{
 	}
 	
 	public function solve_step1(){
+		//仕事が割り当てられたら1,そうでなければ0を返す
+		//solution[i][j] i in person set, j in day set
+		//
+		
 		$solution =array();//出力される解
 		$solution=$this->supply;
 		//echo count($solution)."  ".count($solution[0]);
@@ -88,10 +96,9 @@ class shiibashi{
 			//echo $this->demand[$day_ordered[$j]]." <br>";
 			while($k<$this->demand[$day_ordered[$j]]){
 					//demandの個数だけ割り振る
-				//echo $this->supply[$worker_ordered[$i]][$day_ordered[$j]]." <br>";
-
+				
 				if($this->supply[$worker_ordered[$i]][$day_ordered[$j]]==1){
-					//echo "=1";
+					//person iが空いているかつ店の需要があるときに割り当て成立
 					$solution[$worker_ordered[$i]][$day_ordered[$j]]=1;
 					$k++;
 				}
@@ -105,6 +112,8 @@ class shiibashi{
 	}
 	
 	public function solve_step2($sol1){
+		//step1で得た解を各店舗に割り当てる
+		
 		$solution=$sol1;
 		$rank=$this->rank_worker($sol1);
 		
@@ -199,7 +208,7 @@ class shiibashi{
 	}
 	
 	public function sort_worker($Work){
-		//$現在のシフト状況$Workを引数に優先順位配列を返す
+		//$現在のシフト状況$Workを引数にdayの優先順位配列を返す
 		$work_num=array();
 		$solution=array();
 		for($i=0;$i<count($Work);$i++){
@@ -214,6 +223,7 @@ class shiibashi{
 	}
 	
 	public function rank_worker($Work){
+		//シフト状況$Workを引数にworkerのランク配列を返す
 		$solution=array();
 		$rank=array();
 		//
