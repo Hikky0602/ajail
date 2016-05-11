@@ -15,7 +15,8 @@ $db=new database();
 $table="shift_submit";//テーブル名指定	
 
 $where=" delete_flg =0";
-$arr=$db->select($table,$column='', $where='');
+$column="";
+$arr=$db->select($table,$column, $where);
 
 
 //$person=15;	//人の数（仮）
