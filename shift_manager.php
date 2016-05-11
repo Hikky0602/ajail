@@ -9,7 +9,7 @@
 <?php 
 require_once("shiibashi.php");
 require_once("database_class.php");
-require_once("login_check.php");
+//require_once("login_check.php");
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	
@@ -89,6 +89,7 @@ function setColor(i){
 		document.b3.elements[i].value=0;	
 	}
 	
+
 	
 }
 
@@ -208,7 +209,8 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 					
 			$db->insert($table,$col,$data);
 		}
-		header("Location:http://localhost/aki_farm/shift_confirm.php");
+//		header("Location:http://localhost/ajail/shift_confirm.php");
+		header("Location:http:./shift_confirm.php");
 		exit();	
 	}
 }else{
@@ -236,12 +238,16 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 	echo"</tr>";
 	}	
 	
-	
 }
+	
 ?>
+
+<tr>
+<td>　</td>
+</tr>
+
 </table>
 
-</form>
 
 
 <!-- postする値をhiddenタグで作成  -->
@@ -277,26 +283,35 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 ?>
 <input type="submit" name="submit" value="シフト作成">
 <input type="submit" name="sendToDB" value="シフト決定">
-
-
+<br>
+<br>
 <!--  未完成  -->
 <form  action="" name="b4">
 <table border="/">
-<tr>各店舗
+<tr>提出されたスケジュール
 <th>名前
 <?php
-	for($j=0;$j<$day;$j++){
-		echo "<th>".($j+1);	
+for ($j=0;$j<$day;$j++ ){
+		//dayの出力
+		echo "<th>".($j+1);
 	}
-	for($s=0;$s<count($shop);$s++){
+	for($i=0;$i<$person;$i++){
+		//人の出力
 		echo "<tr>";
-		echo "<td>".$shop[$s]."  店  ";
+		echo "<td>".$arr[$i]["name"];
+		$shift=explode(',',$arr[$i]["shift_data"]);
 		for($j=0;$j<$day;$j++){
+			//表データボタン作成
+				
 			echo "<td>";
-			echo " <input type=\"button\"  value=0>";
+			if($shift[$j]==1){
+				echo "<input type=\"button\"  value="."\"○\") >";
+			}else{
+				echo "<input type=\"button\"  value=\"&nbsp \" )>";
+			}
 		}
-		echo "</tr>";
-	}
+	echo"</tr>";
+	}	
 	
 ?>
 </table>
