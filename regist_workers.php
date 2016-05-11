@@ -12,6 +12,7 @@ $dataArr = array(
    'month'            => '',
    'day'              => '',
    'shop'             => '',
+   'job'              => '',
    'ID'               => '',
    'password1'         => '',
    'password2'         => ''
@@ -93,6 +94,11 @@ $selectDay  =  date("d");
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "A" >A
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "B" >B
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "C" >C<br>
+
+職種<font color = "red">*</font>
+      <input type = "radio" name = "job" selected = "<?php echo $selectJob ?>" value = "アルバイト" >アルバイト
+      <input type = "radio" name = "job" selected = "<?php echo $selectJob ?>" value = "店長" >店長<br>
+
 
      <?php //var_dump($dataArr);?>
         <input type = "submit" name = "confirm" value = "登録"><br>  

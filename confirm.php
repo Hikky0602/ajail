@@ -4,6 +4,7 @@
 require_once('error_Check.class.php');
 require_once('initMaster.class.php');
 require_once('database_class.php');
+require_once('To_hash_class.php');
 
 $common        = new error_check();
 
@@ -310,6 +311,7 @@ $dataArr = $_POST;
 
 unset($dataArr["complete"]);
 
+$hs = new tohash();
 $family_name      = $dataArr["family_name"];
 $first_name       = $dataArr["first_name"];
 $family_name_kana = $dataArr["family_name_kana"];
@@ -317,12 +319,12 @@ $first_name_kana  = $dataArr["first_name_kana"];
 $birth     = $dataArr["year"].$dataArr["month"].$dataArr["day"];
 $tel       = $dataArr['tel1']."-".$dataArr['tel2']."-". $dataArr['tel3'];
 //$date = date("Y年n月j日");
-$type = "社員";
+$type = "お客様";
 $sex  = $dataArr["sex"];
 $email = $dataArr["email"];
 $ID   = $dataArr["ID"];
-$password = $dataArr["password1"];
-//echo $date;
+$password = $hs->to_hash($dataArr["password1"]);
+
 
 //echo $tel . "<br>"; 
 
@@ -423,7 +425,8 @@ mysql_set_charset('utf8');
   </head>
  <body>
    <center>
-   <h1>登録完了しました。</h1>
+   <h1>登録完了しました。</h1><br>
+   <a href="test.php">トップページへ</a><br>
    </center>
  </body>
 </html>

@@ -4,6 +4,7 @@
 require_once('error_Check_workers.class.php');
 require_once('initMaster_workers.class.php');
 require_once('database_class.php');
+require_once('To_hash_class.php');
 
 $common        = new error_check();
 
@@ -24,7 +25,7 @@ case "confirm":
 
      if( isset($_POST['sex']) === false ) $dataArr['sex']   = "";
      if( isset($_POST['shop']) === false ) $dataArr['shop']   = "";
-
+     if( isset($_POST['job']) === false ) $dataArr['job']   = "";
 
      $errArr = $common->errorCheck( $dataArr );
      $err_check = $common->getErrorFlg();
@@ -135,6 +136,13 @@ if( $err_check == false){
         <?php if($errArr['shop'] !== ''){ ?>
         <font color = "red"><?php echo $errArr['shop'];} ?> </font>
 
+職種<font color = "red">*</font>
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "アルバイト">アルバイト
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "店長">店長<br>
+        <?php if($errArr['job'] !== ''){ ?>
+        <font color = "red"><?php echo $errArr['job'];} ?> </font>
+
+
 
         <input type = "submit" name = "confirm" value = "確認"><br>  
   </form> 
@@ -172,6 +180,8 @@ if( $err_check == false){
 パスワード <?php echo "***********"/*$dataArr['password1']*/; ?> <br>
 
 所属店舗  <?php  echo $dataArr['shop'][0]; ?><br>
+
+職種      <?php echo $dataArr["job"];   ?><br>
 
         <input type = "submit" name = "back" value = "戻る"/>
         <input type = "submit" name = "complete" value = "登録完了"/><br>  
@@ -275,11 +285,15 @@ case "back":
 
 パスワード再入力<font color = "red">*</font>
         <input type ="password" name = "password2" value = "<?php echo $dataArr['password2']; ?>" />  <br/>
+
 所属店舗<font color = "red">*</font>
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "A" >A
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "B" >B
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "C" >C<br>
 
+職種<font color = "red">*</font>
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "アルバイト">アルバイト
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "店長">店長<br>
 
         <input type = "submit" name = "confirm" value = "確認"/><br/>  
   </form> 
@@ -294,21 +308,20 @@ $dataArr = $_POST;
 
 unset($dataArr["complete"]);
 
+$hs= new tohash();
+
 $family_name      = $dataArr["family_name"];
 $first_name       = $dataArr["first_name"];
 $family_name_kana = $dataArr["family_name_kana"];
 $first_name_kana  = $dataArr["first_name_kana"];
 $birth     = $dataArr["year"].$dataArr["month"].$dataArr["day"];
-$type = "社員";
+$type = $dataArr["job"];
 $sex  = $dataArr["sex"];
 $ID   = $dataArr["ID"];
-$password = $dataArr["password1"];
+$password = $hs->to_hash($dataArr["password1"]);
 $shop = $dataArr["shop"];
-//echo $date;
 
 //echo $tel . "<br>"; 
-
-//echo $name;
 
 $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
   if(mysqli_connect_errno($link)){
@@ -390,7 +403,8 @@ $sql = "INSERT INTO workers( FamilyName,
   </head>
  <body>
    <center>
-   <h1>登録完了しました。</h1>
+   <h1>登録完了しました。</h1><br>
+   <a href= "shift_worker.php">シフトページへ</a><br>
    </center>
  </body>
 </html>

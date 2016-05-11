@@ -5,7 +5,7 @@
 <?php
 require_once("database_class.php");
 require_once("calendar.php");
- 
+//require_once("login_check.php");
 //$id="sumtrue";
  
 $year=date("Y");
@@ -46,6 +46,7 @@ function compare_row($matrix , $str, $j){
 
 <br>
 <br>
+提出されたスケジュール<br>
 <?php echo $arr[0]["shift_year"]."年  ".$arr[0]["shift_month"]."月"   ?>
 <table border="/">
 <th>名前

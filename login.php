@@ -1,6 +1,7 @@
 <?php
 
 require_once('database_class.php');
+require_once('To_hash_class.php');
 
 session_start(); //セッション開始
 
@@ -29,6 +30,9 @@ if (isset($_POST["login"])) { //ログインボタンが押された時
 if (!empty($_POST["userid"]) && !empty($_POST["password"])) {
 
 $db = new database();
+
+$hs = new tohash();
+
 $table = "regist";
 $column = "";
 $where = "User_ID = '" .  $_POST["userid"] . "'";
@@ -41,8 +45,10 @@ $arart = $db->IDCheck($table, $column, $where);
 echo $arart;
 $counts = count($password_db);
 //echo "$counts";
+$password=$hs->to_hash($_POST["password"]);
+
 if($counts>=1){
-if($password_db[0]["Password"] == $_POST["password"]){
+if($password_db[0]["Password"] == $password){
   echo "認証に成功しました";
   session_regenerate_id(true);
 //  $_SESSION["USERID"] = $_POST["userid"];
@@ -50,14 +56,18 @@ if($password_db[0]["Password"] == $_POST["password"]){
 //  echo $_SESSION["USERID"];
   if($password_db[0]["Type"]=="お客様")
   header("Location: main.php");
-  if($password_db[0]["Type"]=="社員")
+  if($password_db[0]["Type"]=="アルバイト")
   header("Location: shift_worker.php");
+  if($password_db[0]["Type"]=="店長")
+  header("Location: shift_manager.php");
+
+
 //echo $_SESSION["USERID"];
   exit;
 }else{
   echo "認証に失敗しました。";
   print_r($password_db[0]["Password"]);
-  print_r($_POST["password"]);
+  print_r($password);
 } }else{
  $errorMessage1 = "ユーザーIDもしくはパスワードが違います。";
   }
