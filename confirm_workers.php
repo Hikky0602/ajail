@@ -315,6 +315,7 @@ $family_name      = $dataArr["family_name"];
 $first_name       = $dataArr["first_name"];
 $family_name_kana = $dataArr["family_name_kana"];
 $first_name_kana  = $dataArr["first_name_kana"];
+$name             = $family_name.$first_name;
 $birth     = $dataArr["year"].$dataArr["month"].$dataArr["day"];
 $type = $dataArr["job"];
 $sex  = $dataArr["sex"];
@@ -402,7 +403,7 @@ for($i=1;$i<=12;$i++){
   $tbl    = "shift_submit";
   $col    = "name, user_id, shift_year, shift_month, shift_data, submit_time, delete_flg";
   $oppai  = make_shift(2016,$i);
-  $data   = "'','". $ID . "' ,'', '". $i ."','" . $oppai ."' , '',''";
+  $data   = "'" . $name ."','". $ID . "' ,'', '". $i ."','" . $oppai ."' , '',''";
 
   $result= $db->insert($tbl, $col, $data); 
 }
