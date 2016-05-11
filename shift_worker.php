@@ -49,13 +49,19 @@ function inputSchedule(){
 		}else{
 				document.b1.elements[i].style.background="red";
 				document.hb.elements[i].value=0;
-		}	
-	}
+		}
+
 		
+	}
+	
+	
 }
+
 
 // -->
 </script>
+
+
 
 <meta charset="utf-8">
 <title>sumtrue</title>
