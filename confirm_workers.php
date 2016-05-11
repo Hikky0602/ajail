@@ -4,6 +4,7 @@
 require_once('error_Check_workers.class.php');
 require_once('initMaster_workers.class.php');
 require_once('database_class.php');
+require_once('To_hash_class.php');
 
 $common        = new error_check();
 
@@ -24,7 +25,7 @@ case "confirm":
 
      if( isset($_POST['sex']) === false ) $dataArr['sex']   = "";
      if( isset($_POST['shop']) === false ) $dataArr['shop']   = "";
-
+     if( isset($_POST['job']) === false ) $dataArr['job']   = "";
 
      $errArr = $common->errorCheck( $dataArr );
      $err_check = $common->getErrorFlg();
@@ -135,6 +136,13 @@ if( $err_check == false){
         <?php if($errArr['shop'] !== ''){ ?>
         <font color = "red"><?php echo $errArr['shop'];} ?> </font>
 
+職種<font color = "red">*</font>
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "アルバイト">アルバイト
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "店長">店長<br>
+        <?php if($errArr['job'] !== ''){ ?>
+        <font color = "red"><?php echo $errArr['job'];} ?> </font>
+
+
 
         <input type = "submit" name = "confirm" value = "確認"><br>  
   </form> 
@@ -172,6 +180,8 @@ if( $err_check == false){
 パスワード <?php echo "***********"/*$dataArr['password1']*/; ?> <br>
 
 所属店舗  <?php  echo $dataArr['shop'][0]; ?><br>
+
+職種      <?php echo $dataArr["job"];   ?><br>
 
         <input type = "submit" name = "back" value = "戻る"/>
         <input type = "submit" name = "complete" value = "登録完了"/><br>  
@@ -275,11 +285,15 @@ case "back":
 
 パスワード再入力<font color = "red">*</font>
         <input type ="password" name = "password2" value = "<?php echo $dataArr['password2']; ?>" />  <br/>
+
 所属店舗<font color = "red">*</font>
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "A" >A
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "B" >B
       <input type = "radio" name = "shop" selected = "<?php echo $selectShop ?>" value = "C" >C<br>
 
+職種<font color = "red">*</font>
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "アルバイト">アルバイト
+      <input type = "radio" name = "job[]" selected = "<?php echo $selectJob ?>" value = "店長">店長<br>
 
         <input type = "submit" name = "confirm" value = "確認"/><br/>  
   </form> 
@@ -294,107 +308,92 @@ $dataArr = $_POST;
 
 unset($dataArr["complete"]);
 
-$name      = $dataArr["family_name"].$dataArr["first_name"];
-$name_kana = $dataArr["family_name_kana"].$dataArr["first_name_kana"];
+$hs= new tohash();
+
+$family_name      = $dataArr["family_name"];
+$first_name       = $dataArr["first_name"];
+$family_name_kana = $dataArr["family_name_kana"];
+$first_name_kana  = $dataArr["first_name_kana"];
 $birth     = $dataArr["year"].$dataArr["month"].$dataArr["day"];
-//$date = date("Y年n月j日");
-$type = "社員";
+$type = $dataArr["job"];
 $sex  = $dataArr["sex"];
 $ID   = $dataArr["ID"];
-$password = $dataArr["password1"];
+$password = $hs->to_hash($dataArr["password1"]);
 $shop = $dataArr["shop"];
-//echo $date;
 
 //echo $tel . "<br>"; 
 
-//echo $name;
+$link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
+  if(mysqli_connect_errno($link)){
+     echo "inncorect";
+  }
 
-$db=new database();
-$table = "regist";
-$col="name";
-$data= $name;
-
-$db->insert($table, $col ,$data); 
-
-
-//$link = mysqli_connect('localhost','user','password','Akifarm_db');
-// if(mysqli_connect_errno($link)){
-//  echo "inncorect";
-// }
-
-//mysql_set_charset('utf8');
-
-/* $sql = "INSERT INTO regist(name,
-                             kana,
-                             sex,
-                             birthday,
-                             regist_ID,
-                             password,
-                             type)
-                      VALUES('$name',
-                             '$name_kana',
+mysql_set_charset('utf8');
+$sql = "INSERT INTO regist( FamilyName,
+                            FirstName,
+                            FamilyName_kana,
+                            FirstName_kana,
+                            Sex,
+                            Birthday,
+                            PhoneNum,
+                            Mail,
+                            User_ID,
+                            Password,
+                            Type)
+                      VALUES('$family_name',
+                             '$first_name',
+                             '$family_name_kana',
+                             '$first_name_kana',
                              '$sex',
-                             '$birth',
+                             ' ',
+                             ' ',
+                             ' ',
                              '$ID',
                              '$password',
-                             '$shop',
                              '$type')";
 
+  echo $sql;
   $result = mysqli_query($link,$sql);
   if(!$result){
    echo "error" . mysqli_error($link);
   }
-*/
-/*try{
-  $dbh = new PDO("mysql:host=localhost;dbname=Akifarm_db;charset=utf8",
-                 "user",
-                 "password"
-                );
-   if($dbh == null){
-     print('inncorrect<br>');
-   }else{
-     print('correct<br>');
-   }
-  $sql = 'INSERT INTO regist(name,
-                             kana,
-                             sex,
-                             birthday,
-                             tel,
-                             mail,
-                             resigt_ID,
-                             password,
-                             type)
-                      values(:name,
-                             :name_kana,
-                             :sex,
-                             :birth,
-                             :tel,
-                             :mail,
-                             :ID,
-                             :password,
-                             :type)';
-                         
- $stmt = $dbh->prepare($sql);
- $stmt->bindValue(':name', $name, PDO::PARAM_STR);
- $stmt->bindValue(':name_kana', $name_kana, PDO::PARAM_STR);
- $stmt->bindValue(':sex', $dataArr['sex'], PDO::PARAM_INT);
- $stmt->bindValue(':birth', $birth, PDO::PARAM_INT);
- $stmt->bindValue(':tel', $tel, PDO::PARAM_STR);
- $stmt->bindValue(':mail', $dataArr['email'], PDO::PARAM_STR);
- $stmt->bindValue(':ID', $dataArr['ID'], PDO::PARAM_STR);
- $stmt->bindValue(':password',$dataArr['password1'], PDO::PARAM_STR);
- $stmt->bindValue(':type',$type,PDO::PARAM_STR);
- $stmt->execute();
+  mysqli_close($link);
 
- while($result = $stmt->fetch(PDO::FETCH_ASSOC)){
-  print($result['type']);
-  print($result['password'].'<br>');
- }
-} catch (PDOExeption $e) {
-     print "エラー！:" . $e->getMessage() . "<br/>";
-     die();
-}
-*/
+
+$link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
+  if(mysqli_connect_errno($link)){
+     echo "inncorect";
+  }
+
+mysql_set_charset('utf8');
+$sql = "INSERT INTO workers( FamilyName,
+                            FirstName,
+                            FamilyName_kana,
+                            FirstName_kana,
+                            Sex,
+                            StartTime,
+                            Store,
+                            User_ID,
+                            Password
+                                  )
+                      VALUES('$family_name',
+                             '$first_name',
+                             '$family_name_kana',
+                             '$first_name_kana',
+                             '$sex',
+                             '$birth',
+                             '$shop',
+                             '$ID',
+                             '$password'
+                                 )";
+
+  echo $sql;
+  $result = mysqli_query($link,$sql);
+  if(!$result){
+   echo "error" . mysqli_error($link);
+  }
+
+
 ?>
 
 <html>
