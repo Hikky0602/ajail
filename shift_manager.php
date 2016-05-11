@@ -41,6 +41,10 @@ $where=" shift_month=". $month;
 $column="";
 $arr=$db->select($table,$column, $where);
 
+$sql="SELECT * FROM shift_submit JOIN regist ON shift_submit.user_id=regist.User_ID WHERE shift_month= ".$month;
+
+
+
 //人数の長さ
 $person=count($arr);
 
@@ -208,7 +212,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 		for($i=0;$i<$person;$i++){
 			//人の出力
 			echo "<tr>";
-			echo "<td>".$arr[$i]["name"];	
+			echo "<td>".$arr[$i]["FamilyName"]." ".$arr[$i]["FirstName"];	
 			$shift=explode(',',$arr[$i]["shift_data"]);
 			$day=count($shift);
 		
@@ -244,12 +248,10 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 		$result=$db->select($table,$where);
 		if($result[0]["COUNT(*)"]==0){
 		
-			$col="name,user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
+			$col="user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
 			for($i=0;$i<$person;$i++){
 				$shift_data=implode("," , $sche[$i]);//insertするvalue指定
-				$data="\"".$arr[$i]["name"]."\""
-						.","
-						."\"".$arr[$i]["user_id"]."\""
+				$data="\"".$arr[$i]["user_id"]."\""
 						.","
 						.$arr[$i]["shift_year"]
 						.","
@@ -288,7 +290,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 	for($i=0;$i<$person;$i++){
 		//人の出力
 		echo "<tr>";
-		echo "<td>".$arr[$i]["name"];
+		echo "<td>".$arr[$i]["FamilyName"]." ".$arr[$i]["FirstName"];
 		$shift=explode(',',$arr[$i]["shift_data"]);
 		for($j=0;$j<$day;$j++){
 			//表データボタン作成
@@ -399,7 +401,7 @@ for ($j=0;$j<$day;$j++ ){
 	for($i=0;$i<$person;$i++){
 		//人の出力
 		echo "<tr>";
-		echo "<td>".$arr[$i]["name"];
+		echo "<td>".$arr[$i]["FamilyName"]." ".$arr[$i]["FirstName"];
 		$shift=explode(',',$arr[$i]["shift_data"]);
 		for($j=0;$j<$day;$j++){
 			//表データボタン作成
