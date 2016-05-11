@@ -144,7 +144,12 @@ class database {
 	        }
          }
 		 
-	
+           public function jointable(){
+           
+           $this->sql="SELECT"
+
+}
+             	
 		
 
 }
