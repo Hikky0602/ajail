@@ -14,8 +14,8 @@ $year=date("Y");
 $month=date("m");
 $day=num_month($year,$month);
 
-$name="小島瑠璃子";
-$user_id="kojiruri";
+$name="test111";
+$user_id="test2222";
 
 
 

@@ -6,7 +6,11 @@ define('DB','Akifarm_db');
 define('USER','user');
 define('PASS','password');
 
+require_once("database_class.php");
+
 $link = mysqli_connect('localhost','user','password','Akifarm_db');
+
+$id=1;
 
 if(isset($_POST['send'])===true){
 	$id = $_POST['id'];
@@ -23,21 +27,57 @@ if(isset($_POST['send'])===true){
 
 <html>
 <head><meta charset="utf8"></head>
+<form  method="post"  action="" name="test">
+
+<?php 
+for($i=0;$i<30;$i++){
+	echo "<input type=\"checkbox\" name=\"schedule[]\" value=".$i ." >";
+}
+?>
+<input type="submit" name="submit" value="提出">
+</form>
+
+	
 <body>
-
-
-
-
-
-
 
 
 </body>
 </html>
 <?php
 	}
+	
+	
 }
 
 
+if(isset($_POST["submit"])){
+
+var_dump($_POST["schedule"]);
+
+$schedule_post=array();
+for($i=0;$i<30;$i++){
+	$schedule_post[$i]=0;
+}
+for($i=0;$i<count($_POST["schedule"]);$i++){
+	$schedule_post[$_POST["schedule"][$i]]=1;
+}
+
+$db = new database();
+$table="shift_submit_proto";
+$col="name,user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
+		$shift_data=implode("," , $schedule_post);//insertするvalue指定
+		$data="\"".$id."\""
+				.","
+				."\"".$id."\""
+				.","
+				."0"
+				.","
+				."0"
+				.","
+				."\"".$shift_data."\""
+				.","."0"
+				;
+		echo $db->insert($table,$col,$data);
+}
 
 ?>
