@@ -1,7 +1,7 @@
 <?php
 
 require_once('database_class.php');  //データベースクラス
-require_once('To_hash_class.php');  //ハッシュ化クラス
+require_once('To_hash_class.php');   //ハッシュ化クラス
 
 session_start(); //セッション開始
 
@@ -15,18 +15,19 @@ $db['dbname'] = "Akifarm_db";
 */
 
 //エラーメッセージ初期化
-$errorMessage = "";
-$errorMessage1= ""; 
+$errorMessage = "";  
+$errorMessage1 = "";
+
 
 //ログインボタンが押された時
-if (isset($_POST["login"])) { 
+if (isset($_POST["delete"])) { 
 
    if (empty($_POST["userid"]))
      $errorMessage = "ユーザーIDが未入力です。";
    if (empty($_POST["password"])) 
      $errorMessage1 = "パスワードが未入力です。";
    
-//ユーザー名、パスワードに何かしら入っていた時
+//ユーザー名、パスワード何かしら入っていた時
 if (!empty($_POST["userid"]) && !empty($_POST["password"])) {
 
 //データベースクラス呼出
@@ -35,7 +36,7 @@ $db = new database();
 //ハッシュ化クラス呼出
 $hs = new tohash();
 
-//セッションにはユーザーID入れておく
+//セッションに一応入れておく
 $_SESSION["USERID"] = $_POST["userid"];
 
 //入力IDからデータベース参照
@@ -45,45 +46,43 @@ $where = "User_ID = '" .  $_POST["userid"] . "'";
 $password_db = array();
 $password_db = $db->select($table, $column, $where);  
 
-//$arart = $db->IDCheck($table, $column, $where);
-
-//データベースに同じIDの情報があったか確認
+//データベースに同じIDのものがあったか確認
 $counts = count($password_db);
 
 //入力パスワードハッシュ化
 $password=$hs->to_hash($_POST["password"]);
 
-if($counts>=1){  //データベースに同じIDの情報があった時
 
-//退会していないかの確認
-if($password_db[0]["dlt_flg"] == 0){
+if($counts>=1){  //データベースに同じIDの情報があった時
 
 //パスワード確認
 if($password_db[0]["Password"] == $password){
-  echo "認証に成功しました";
+  echo "登録を削除しました。";
+  
+//session destroy
+  $_SESSION = array();
+ if(isset($_COOKIE[session_name()])){
+      setcookie(session_name(), '', time()-42000, '/');
+ }
+  session_destroy();
 
-//セッションに苗字を入れる「〜様ようこそ」用
-  session_regenerate_id(true);
-  $_SESSION["USERID"] = $password_db[0]["FamilyName"];
-
-//タイプに応じて飛ぶページをカエル
-  if($password_db[0]["Type"]=="お客様")
-  header("Location: main.php");
-  if($password_db[0]["Type"]=="アルバイト")
-  header("Location: shift_worker.php");
-  if($password_db[0]["Type"]=="店長")
-  header("Location: shift_manager.php");
+//列を特定しデリーとフラグを1にする。非会員とみなす。
+  $setcol = "dlt_flg";
+  $value1 = 1;
+  $wherecol = "User_ID";
+  $value2 = $_POST["userid"];
+  $result = $db->update($table, $setcol, $value1, $wherecol, $value2);
 
   exit;
-}else{ //error Message
+}else{
   echo "認証に失敗しました。";
   print_r($password_db[0]["Password"]);
   print_r($password);
-} }else{$errorMessage1 = "ユーザーIDもしくはパスワードが違います。";
-} }else{
+} 
+}else{
  $errorMessage1 = "ユーザーIDもしくはパスワードが違います。";
- }
- }else{}
+}
+}else{}
 }
 
 ?>
@@ -91,11 +90,11 @@ if($password_db[0]["Password"] == $password){
 <html>
   <head>
     <meta charset = "utf-8" />
-    <title> ログイン </title>
+    <title> 登録削除 </title>
   </head>
   <body>
   <center>
-    <h1>ログイン</h1>
+    <h1>登録削除</h1>
   <center>
   <form action = "" method = "post">
   </center>
@@ -103,10 +102,7 @@ if($password_db[0]["Password"] == $password){
   <br><?php echo $errorMessage;?><br>
   <label for = "password">パスワード</label><input type="password" id = "password" name = "password" value = "">
   <br><?php echo $errorMessage1;?><br>
-  <input type="submit" id="login" name = "login" value = "ログイン"><br>
-   <a href="regist.php" >新規登録はこちら</a><br>   
-   <a href="regist_delete.php" >退会はこちら</a><br>   
-   <a href="regist_workers.php" >社員登録はこちら（仮）</a><br>   
+  <input type="submit" id="delete" name = "delete" value = "退会">
    </form>
   </body>
 </html>

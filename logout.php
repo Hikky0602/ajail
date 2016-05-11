@@ -17,6 +17,7 @@ session_destroy();
   <title> logout </title>
  </head>
  <body>
- <h1> ログアウトしました。 </h1>
+ <h1> ログアウトしました。 </h1><br>
+ <a href="test.php">ホームに戻る</a><br>
  </body>
 </html>

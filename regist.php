@@ -20,7 +20,6 @@ $dataArr = array(
    'password2'         => ''
 );
 
-//var_dump($dataArr);
 
 list( $yearArr, $monthArr, $dayArr ) = initMaster::getDate();
 $sexArr = initMaster::getSex();
@@ -101,7 +100,6 @@ Eメールアドレス<font color = "red">*</font>
 パスワード再入力<font color = "red">*</font>
         <input type ="password" name = "password2" value = "<?php echo $dataArr['password2'] ?>" />  <br>
 
-     <?php //var_dump($dataArr);?>
         <input type = "submit" name = "confirm" value = "登録"><br>  
   </form>  
  </body>
