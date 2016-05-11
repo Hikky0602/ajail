@@ -7,50 +7,28 @@ define('USER','user');
 define('PASS','password');
 
 require_once("database_class.php");
+require_once("calender.php");
 
 $link = mysqli_connect('localhost','user','password','Akifarm_db');
 
 if(isset($_POST['send'])===true){
 	$id = $_POST['id'];
-	$quary = 'SELECT * FROM user_ploto WHERE id="' . $id . '"';
-	echo $id;	
+	$quary = 'SELECT * FROM user_ploto WHERE id="' . $id . '"';	
 	$res = mysqli_query($link, $quary);
 	$data = mysqli_fetch_assoc($res);
 	if($data==NULL){
 		echo 'ID error!';
 		include_once("shift_worker_login_proto.html");
 	}else{
-
-?>
-
-<html>
-<head><meta charset="utf8"></head>
-<form  method="post"  action="" name="test">
-
-<?php 
-for($i=0;$i<30;$i++){
-	echo "<input type=\"checkbox\" name=\"schedule[]\" value=".$i ." >";
-}
-?>
-<input type="submit" name="submit" value="提出">
-</form>
-
-	
-<body>
-
-
-</body>
-</html>
-<?php
+		setCookie("id", $id);
+		include_once("shift_worker_send_proto.php");
 	}
-	
-	
 }
 
 
 if(isset($_POST["submit"])){
-
-	var_dump($_POST["schedule"]);
+	echo "提出完了";
+	$id = $_COOKIE["id"];
 
 	$schedule_post=array();
 	for($i=0;$i<30;$i++){
@@ -69,6 +47,7 @@ if(isset($_POST["submit"])){
 			.'"'.$shift_data.'"'
 			;
 		echo $db->insert($table,$col,$data);
+		include_once("shift_worker_send_proto.php");
 }
 
 ?>
