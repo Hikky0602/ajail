@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 
 require_once('error_Check_workers.class.php');
 require_once('initMaster_workers.class.php');
@@ -322,7 +323,7 @@ $sex  = $dataArr["sex"];
 $ID   = $dataArr["ID"];
 $password = $hs->to_hash($dataArr["password1"]);
 $shop = $dataArr["shop"];
-
+$_SESSION[USERID]= $ID;
 //echo $tel . "<br>"; 
 
 $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');

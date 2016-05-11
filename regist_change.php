@@ -462,39 +462,9 @@ $result = $db->update("regist","Birthday",$birth,"User_ID",$_SESSION[USERID]);
 $result = $db->update("regist","PhoneNum",$tel,"User_ID",$_SESSION[USERID]);
 $result = $db->update("regist","Mail",$email,"User_ID",$_SESSION[USERID]);
 $result = $db->update("regist","User_ID",$ID,"User_ID",$_SESSION[USERID]);
+$_SESSION[USERID] = $ID; 
 $result = $db->update("regist","Password",$password,"User_ID",$_SESSION[USERID]);
 //$result = $db->update("regist","",$family_name,"User_ID",$_SESSION[USERID]);
-
- $sql = "INSERT INTO regist( FamilyName,
-                             FirstName,
-                             FamilyName_kana,
-                             FirstName_kana,
-                             Sex,
-                             Birthday,
-                             PhoneNum,
-                             Mail,
-                             User_ID,
-                             Password,
-                             Type,
-                             dlt_flg)
-                      VALUES('$family_name',
-                             '$first_name',
-                             '$family_name_kana',
-                             '$first_name_kana',
-                             '$sex',
-                             '$birth',
-                             '$tel',
-                             '$email',
-                             '$ID',
-                             '$password',
-                             '$type',
-                             '$dlt_flg')";
-
-  echo $sql;
-  $result = mysqli_query($link,$sql);
-  if(!$result){
-   echo "error" . mysqli_error($link);
-  }
 
 /*try{
   $dbh = new PDO("mysql:host=localhost;dbname=Akifarm_db;charset=utf8",

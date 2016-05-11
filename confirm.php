@@ -1,5 +1,6 @@
 <?php
 
+session_start();
 
 require_once('error_Check.class.php');
 require_once('initMaster.class.php');
@@ -326,6 +327,7 @@ $ID   = $dataArr["ID"];
 $password = $hs->to_hash($dataArr["password1"]);
 $dlt_flg = 0;
 
+$_SESSION[USERID]= $ID;
 
 $link = mysqli_connect('localhost','user','password','Akifarm_db');
  if(mysqli_connect_errno($link)){
