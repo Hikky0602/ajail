@@ -122,6 +122,27 @@ class database {
                     return true;
 	        }
          }
+		 
+		          public function update2($table, $setcol, $value1, $where){
+		/* $table・・・DB内の$tableテーブル
+		** $setcol・・・valueの値を変えたいカラム
+		** $valu1・・・変えたい値
+		** $wherecol・・・このカラムの
+                ** $value2。。。この値がある場所
+		*/
+		//返り値 select結果
+	
+
+                $this->sql=" UPDATE " . $table . " SET " . $setcol . " = " . $value1 . " WHERE " . $where;   
+                $result = mysqli_query($this->link, $this->sql);
+                echo $this->sql;
+                if(!$result){
+                    echo "error" . mysqli_error($this->link);
+                    return false;
+                }else{
+                    return true;
+	        }
+         }
 
 }
 

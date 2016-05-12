@@ -328,7 +328,7 @@ $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
      echo "inncorect";
   }
 
-mysql_set_charset('utf8');
+//mysql_set_charset('utf8');
 $sql = "INSERT INTO regist( FamilyName,
                             FirstName,
                             FamilyName_kana,
@@ -365,7 +365,7 @@ $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
      echo "inncorect";
   }
 
-mysql_set_charset('utf8');
+//mysql_set_charset('utf8');
 $sql = "INSERT INTO workers( FamilyName,
                             FirstName,
                             FamilyName_kana,
@@ -404,8 +404,13 @@ $sql = "INSERT INTO workers( FamilyName,
  <body>
    <center>
    <h1>登録完了しました。</h1><br>
+   <?php if($type==="アルバイト" ){ ?>
    <a href= "shift_worker.php">シフトページへ</a><br>
-   </center>
+   <?php } ?>
+    <?php if($type==="店長" ){ ?>
+   <a href= "shift_manager.php">シフトページへ</a><br>
+   <?php } ?>
+  </center>
  </body>
 </html>
 

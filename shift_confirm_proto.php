@@ -6,6 +6,7 @@
 require_once("database_class.php");
 require_once("calendar.php");
 //require_once("login_check.php");
+//$id="sumtrue";
  
 $year=date("Y");
 $month=date("m");
@@ -13,7 +14,7 @@ $day=num_month($year,$month);
 $shop=array("A","B","C");
 
 $db=new database();
-$table="shift_fix";
+$table="shift_fix_proto";
 $column="";//アスタリスクになる
 $where=" delete_flg =0";
 $arr=$db->select($table,$column, $where);

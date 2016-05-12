@@ -30,12 +30,8 @@ switch($month){
 		$ans=29;
 		break;
 	}
-
 }
-
 return $ans;
-
-
 
 }
 
@@ -71,6 +67,55 @@ case 6;
 return $date_num;
 
 
+}
+
+
+function turnCalendar($year,$month,$method){
+	//$year,$monthから$methodに対して1動かす、もしくは動かさないときの年月を配列で返す
+	$arr=array();
+	if($method==="next"){
+		$arr[1]=$month+1;
+		$arr[0]=$year+floor($month/12);
+		if($arr[1]==13){
+			$arr[1]=1;
+		}
+	}else if($method==="prev"){
+		$arr[1]=$month-1;
+		if($month==1){
+			$arr[0]=$year-1;
+			$arr[1]=12;
+		}else{
+			$arr[0]=$year;
+		}
+	}else if($method==="now"){
+		$arr[0]=date("Y");
+		$arr[1]=date("m");
+	}else{
+		$arr[0]=$year;
+		$arr[1]=$month;
+	}
+	
+
+	
+	return $arr; 
+	
+}
+
+function operationCalendar($year,$month,$delta){
+	//$year,$monthから変化$deltaしたときの年月を返す。
+	$result=array();
+	$abs_delta=abs($delta);
+	$signal=0;
+	if($delta>0){
+		$signal="next";
+	}else{
+		$signal="prev";
+	}
+	for($i=0;$i<$abs_delta;$i++){
+		$result=turnCalendar($year,$month,$signal);
+	}
+	return $result;
+	
 }
 
 
