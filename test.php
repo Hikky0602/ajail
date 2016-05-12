@@ -17,8 +17,21 @@
 <div id="container"><!--外-->
 	<div id="header">
 		<div id="logo"><h1>AKI農場</h1></div>
-		<button class="loginBt" onclick="location.href='login.php'">login</button>
-	</div>
+
+
+
+<!--非ログイン時  --->
+<button class="loginBt" onclick="location.href='login.php'">login</button>
+
+<!--ログイン時    --->
+<button class="loginBt" onclick="location.href='logout.php'">logout</button>
+
+<!--非ログイン時  --->
+<button class="loginBt" onclick="location.href='login.php'">login</button>
+
+
+
+</div>
 
 	<div id="topPic">
 		<div id="loop">
