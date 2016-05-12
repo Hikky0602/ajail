@@ -17,8 +17,20 @@
 <div id="container"><!--外-->
 	<div id="header">
 		<div id="logo"><h1>AKI農場</h1></div>
-		<button class="loginBt" onclick="location.href='login.php'">login</button>
-	</div>
+
+
+
+
+<?php if(){	?>
+<!--ログイン時    --->
+<button class="loginBt" onclick="location.href='logout.php'">logout</button>
+<?php else{	?>
+<!--非ログイン時  --->
+<button class="loginBt" onclick="location.href='login.php'">login</button>
+<?php ?>
+
+
+</div>
 
 	<div id="topPic">
 		<div id="loop">

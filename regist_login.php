@@ -35,9 +35,6 @@ $db = new database();
 //ハッシュ化クラス呼出
 $hs = new tohash();
 
-//セッションにはユーザーID入れておく
-$_SESSION["USERID"] = $_POST["userid"];
-
 //入力IDからデータベース参照
 $table = "regist";
 $column = "";
@@ -53,6 +50,11 @@ $counts = count($password_db);
 //入力パスワードハッシュ化
 $password=$hs->to_hash($_POST["password"]);
 
+//セッションにhash_pass入れておく
+$_SESSION["Pass"] = $password;
+$_SESSION["Pass_Raw"] = $_POST["password"];
+//echo ($_SESSION[Pass_Raw"])
+
 if($counts>=1){  //データベースに同じIDの情報があった時
 
 //退会していないかの確認
@@ -64,15 +66,10 @@ if($password_db[0]["Password"] == $password){
 
 //セッションに苗字を入れる「〜様ようこそ」用
   session_regenerate_id(true);
-  $_SESSION["USERID"] = $password_db[0]["FamilyName"];
+  $_SESSION["NAME"] = $password_db[0]["FamilyName"];
 
 //タイプに応じて飛ぶページをカエル
-  if($password_db[0]["Type"]=="お客様")
-  header("Location: main.php");
-  if($password_db[0]["Type"]=="アルバイト")
-  header("Location: shift_worker.php");
-  if($password_db[0]["Type"]=="店長")
-  header("Location: shift_manager.php");
+  header("Location: regist_change.php");
 
   exit;
 }else{ //error Message
@@ -104,11 +101,10 @@ if($password_db[0]["Password"] == $password){
   <label for = "password">パスワード</label><input type="password" id = "password" name = "password" value = "">
   <br><?php echo $errorMessage1;?><br>
   <input type="submit" id="login" name = "login" value = "ログイン"><br>
-   <a href="regist.php" >新規登録はこちら</a><br>   
-   <a href="regist_delete.php" >退会はこちら</a><br>   
-   <a href="regist_workers.php" >社員登録はこちら（仮）</a><br>   
-   <a href="regist_login.php" >登録変更はこちら（仮）</a><br>   
    </form>
   </body>
 </html>
+
+
+
 
