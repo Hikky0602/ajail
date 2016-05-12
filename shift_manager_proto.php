@@ -195,7 +195,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 		}
 		
 		$db=new database();
-		$table=	"shift_fix";//テーブル名指定
+		$table=	"shift_fix_proto";//テーブル名指定
 		$where=" shift_year= ".$arr[0]["shift_year"]." AND shift_month= ".$arr[0]["shift_month"];
 		$db->delete($table,$where);
 		$col="name,user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
@@ -216,7 +216,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 					
 			$db->insert($table,$col,$data);
 		}
-		header("Location:http://localhost/aki_farm/shift_confirm.php");
+		header("Location:./shift_confirm_proto.php");
 		exit();	
 	}
 }else{
