@@ -12,10 +12,21 @@ require_once("schedule.php");
 require_once("login_check.php");
 $year=date("Y");
 $month=date("m");
+
+if(isset($_POST["month"])){
+	$month=$_POST["month"];
+}
+
+if(isset($_POST["next"])){
+	$month+=1;
+}else if(isset($_POST["prev"])){
+	$month-=1;
+}
+
 $day=num_month($year,$month);
 
 $name="noname";
-if($_SESSION["NAME"]!==""){
+if(isset($_SESSION)){
 $name=$_SESSION["NAME"].$_SESSION["FIRSTNAME"];
 }else{
 	
@@ -82,6 +93,13 @@ function inputSchedule(){
 <div>
 <table border="/">
 <tr><?php echo  $year."年".$month. " 月"; ?>
+
+<form method="post" action="">
+<input type="submit" name="prev" value="前の月"  /> 
+<input type="submit" name="next" value="次の月"  /> 
+<input type="hidden" name="month" value=<?php  echo $month; ?>>
+</form>
+
 <th>日
 <th>月
 <th>火
@@ -90,8 +108,6 @@ function inputSchedule(){
 <th>金
 <th>土
 </tr>
-
-
 
 <form method ="post" action="" name="b1" class="squareBt">
 <?php
