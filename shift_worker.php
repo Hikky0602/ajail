@@ -9,12 +9,17 @@
 require_once("calendar.php");
 require_once("database_class.php");
 require_once("schedule.php");
-//require_once("login_check.php");
+require_once("login_check.php");
 $year=date("Y");
 $month=date("m");
 $day=num_month($year,$month);
 
-$name="test111";
+$name="noname";
+if($_SESSION["NAME"]!==""){
+$name=$_SESSION["NAME"].$_SESSION["FIRSTNAME"];
+}else{
+	
+}
 $user_id="test2222";
 
 
@@ -204,7 +209,9 @@ for($i=0;$i<$day;$i++){
 <input type="submit" name="submit" value="提出" onClick="alert('シフトを提出しました。');" /> 
 </form>
 <button  onclick="location.href='logout.php'">ログアウト</button>
+<button  onclick="location.href='shift_confirm.php'">シフト確認</button>
 <input type="button" class="squareBt" value="test" />
+
 <br>赤:空いてない
 <br>青:空いている
 </div></div>

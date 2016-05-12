@@ -9,7 +9,7 @@
 <?php 
 require_once("shiibashi.php");
 require_once("database_class.php");
-//require_once("login_check.php");
+require_once("login_check.php");
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	
