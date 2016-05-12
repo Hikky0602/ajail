@@ -9,18 +9,36 @@
 require_once("calendar.php");
 require_once("database_class.php");
 require_once("schedule.php");
-require_once("login_check.php");
+//require_once("login_check.php");
 $year=date("Y");
 $month=date("m");
 
 if(isset($_POST["month"])){
 	$month=$_POST["month"];
 }
+if(isset($_POST["year"])){
+	$year=$_POST["year"];
+}
 
 if(isset($_POST["next"])){
-	$month+=1;
+	if($month==12){
+		$year+=1;
+		$month=1;
+	}else{
+		$month+=1;
+	}
 }else if(isset($_POST["prev"])){
-	$month-=1;
+	if($month==1){
+		$year-=1;
+		$month=12;
+	}else{
+		$month-=1;
+	}
+}
+
+if(isset($_POST["now"])){
+	$year=date("Y");
+	$month=date("m");
 }
 
 $day=num_month($year,$month);
@@ -97,7 +115,9 @@ function inputSchedule(){
 <form method="post" action="">
 <input type="submit" name="prev" value="前の月"  /> 
 <input type="submit" name="next" value="次の月"  /> 
+<input type="submit" name="now" value="今月"  /> 
 <input type="hidden" name="month" value=<?php  echo $month; ?>>
+<input type="hidden" name="year" value=<?php  echo $year; ?>>
 </form>
 
 <th>日

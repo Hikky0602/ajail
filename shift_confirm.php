@@ -5,8 +5,7 @@
 <?php
 require_once("database_class.php");
 require_once("calendar.php");
-require_once("login_check.php");
-//$id="sumtrue";
+//require_once("login_check.php");
  
 $year=date("Y");
 $month=date("m");
