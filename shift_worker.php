@@ -44,12 +44,14 @@ if(isset($_POST["now"])){
 $day=num_month($year,$month);
 
 $name="noname";
+$user_id="test2222";
 if(isset($_SESSION)){
 $name=$_SESSION["NAME"].$_SESSION["FIRSTNAME"];
+$user_id=$_SESSION["ID"];
 }else{
 	
 }
-$user_id="test2222";
+
 
 
 
@@ -142,6 +144,11 @@ $arr=scheduleToArray($arr);
 	
 	//提出された場合
 	if(isset($_POST["schedule_worker"])){
+		
+		
+		
+		
+		
 		
 		//すでに提出されたシフトがある場合
 		$column="shift_data";
