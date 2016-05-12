@@ -203,6 +203,7 @@ for($i=0;$i<$day;$i++){
 ?>
 <input type="submit" name="submit" value="提出" onClick="alert('シフトを提出しました。');" /> 
 </form>
+<button  onclick="location.href='logout.php'">ログアウト</button>
 <input type="button" class="squareBt" value="test" />
 <br>赤:空いてない
 <br>青:空いている
