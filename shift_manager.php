@@ -9,12 +9,12 @@
 <?php 
 require_once("shiibashi.php");
 require_once("database_class.php");
-require_once("login_check.php");
+//require_once("login_check.php");
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	
 
-$where=" delete_flg =0";
+$where="";
 $column="";
 $arr=$db->select($table,$column, $where);
 
@@ -196,25 +196,42 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 		
 		$db=new database();
 		$table=	"shift_fix";//テーブル名指定
+		$column="COUNT(*) ";
 		$where=" shift_year= ".$arr[0]["shift_year"]." AND shift_month= ".$arr[0]["shift_month"];
-		$db->delete($table,$where);
-		$col="name,user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
 		
-		for($i=0;$i<$person;$i++){
-			$shift_data=implode("," , $sche[$i]);//insertするvalue指定
-			$data="\"".$arr[$i]["name"]."\""
-					.","
-					."\"".$arr[$i]["user_id"]."\""
-					.","
-					.$arr[$i]["shift_year"]
-					.","
-					.$arr[$i]["shift_month"]
-					.","
-					."\"".$shift_data."\""
-					.","."0"
-					;
+		$result=$db->select($table,$where);
+		if($result[0]["COUNT(*)"]==0){
+		
+			$col="name,user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
+			for($i=0;$i<$person;$i++){
+				$shift_data=implode("," , $sche[$i]);//insertするvalue指定
+				$data="\"".$arr[$i]["name"]."\""
+						.","
+						."\"".$arr[$i]["user_id"]."\""
+						.","
+						.$arr[$i]["shift_year"]
+						.","
+						.$arr[$i]["shift_month"]
+						.","
+						."\"".$shift_data."\""
+						.","."0"
+						;
 					
-			$db->insert($table,$col,$data);
+				$db->insert($table,$col,$data);
+			}
+		
+		}else{
+				
+			for($i=0;$i<$person;$i++){
+				$column="shift_data";
+				$where=" user_id ="."\"".$arr[$i]["user_id"]."\"". " AND shift_month=". $arr[$i]["shift_month"];
+				
+				$shift_data=implode("," , $sche[$i]);//insertするvalue指定
+				$data="\"".$shift_data."\"";
+					
+				$db->update2($table,$col,$data,$where);
+			}
+			
 		}
 		header("Location:http://localhost/aki_farm/shift_confirm.php");
 		exit();	

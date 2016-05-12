@@ -20,31 +20,21 @@ if(isset($_POST["year"])){
 	$year=$_POST["year"];
 }
 
+$method="";
 if(isset($_POST["next"])){
-	if($month==12){
-		$year+=1;
-		$month=1;
-	}else{
-		$month+=1;
-	}
+	$method="next";
 }else if(isset($_POST["prev"])){
-	if($month==1){
-		$year-=1;
-		$month=12;
-	}else{
-		$month-=1;
-	}
+	$method="prev";
+}else if(isset($_POST["now"])){
+	$method="now";
 }
-
-if(isset($_POST["now"])){
-	$year=date("Y");
-	$month=date("m");
-}
+$year=turnCalendar($year,$month,$method)[0];
+$month=turnCalendar($year,$month,$method)[1];
 
 $day=num_month($year,$month);
 
 $name="noname";
-$user_id="test2222";
+$user_id="noid";
 if(isset($_SESSION)){
 $name=$_SESSION["NAME"].$_SESSION["FIRSTNAME"];
 $user_id=$_SESSION["ID"];
@@ -134,46 +124,39 @@ function inputSchedule(){
 <form method ="post" action="" name="b1" class="squareBt">
 <?php
 
+
 $db=new database();
 $table="shift_submit";//テーブル名指定	
-
+/*
 $column="shift_data";
 $where=" user_id ="."\"".$user_id."\"";
 $arr=$db->select($table,$column, $where);
 $arr=scheduleToArray($arr);
+	*/
+	
 	
 	//提出された場合
 	if(isset($_POST["schedule_worker"])){
-		
-		
-		
-		
-		
-		
-		//すでに提出されたシフトがある場合
+			
+		//データベースのシフトデータの更新
 		$column="shift_data";
-		$where=" user_id ="."\"".$user_id."\"". " AND delete_flg=0 ";
-		
-		if(count($arr)>0){
-			//提出されてたら古いほうをlogical delete
-			$db->delete($table, $where);
-		}
-		
-		$col="name,user_id,shift_year,shift_month,shift_data,delete_flg";//insertするcolumn指定
+		$where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $month;
+		$col="shift_data";//insertするcolumn指定
 		$shift_data=implode("," , $_POST["schedule_worker"]);//insertするvalue指定
-		$data="\"".$name."\""
-				.","
-				."\"".$user_id."\""
-				.","
-				.$year
-				.","
-				.$month
-				.","
-				."\"".$shift_data."\""
-				.","."0"
-				;
-		echo $db->insert($table,$col,$data);
+		$data="\"".$shift_data."\"";
+		echo $db->update2($table,$col,$data,$where);
 		
+		//２ヶ月前のデータ更新
+		$upd=operationCalendar($year,$month,-2);
+		$where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $upd[1];
+		$zero_arr=array();
+		for($i=0;$i<num_month($upd[0],$upd[1]);$i++){
+			$zero_arr[]=0;
+		}
+		$zero_data=implode("," , $upd);//insertするvalue指定
+		$data="\"".$zero_data."\"";
+		echo $db->update2($table,$col,$data,$where);
+	
 	}
 
 	$arr= array();
