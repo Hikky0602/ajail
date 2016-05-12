@@ -20,15 +20,14 @@
 
 
 
-<!--非ログイン時  --->
-<button class="loginBt" onclick="location.href='login.php'">login</button>
 
+<?php if(){	?>
 <!--ログイン時    --->
 <button class="loginBt" onclick="location.href='logout.php'">logout</button>
-
+<?php else{	?>
 <!--非ログイン時  --->
 <button class="loginBt" onclick="location.href='login.php'">login</button>
-
+<?php ?>
 
 
 </div>
