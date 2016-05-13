@@ -451,13 +451,19 @@ $ID   = $dataArr["ID"];
 $password = $hs->to_hash($dataArr["password1"]);
 $dlt_flg = 0;
 
-
-$link = mysqli_connect('localhost','user','password','Akifarm_db');
- if(mysqli_connect_errno($link)){
-  echo "inncorect";
- }
-
-mysql_set_charset('utf8');
+//UPDATE HENKOU
+$db = new database();
+$result = $db->update("regist","FamilyName",$family_name,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","FirstName",$first_name,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","FamilyName_kana",$family_name_kana,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","FamilyName_kana",$first_name_kana,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","Sex",$sex,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","Birthday",$birth,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","PhoneNum",$tel,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","Mail",$email,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","User_ID",$ID,"User_ID",$_SESSION[USERID]);
+$result = $db->update("regist","Password",$password,"User_ID",$_SESSION[USERID]);
+//$result = $db->update("regist","",$family_name,"User_ID",$_SESSION[USERID]);
 
  $sql = "INSERT INTO regist( FamilyName,
                              FirstName,
