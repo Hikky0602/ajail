@@ -10,9 +10,10 @@ require_once("calendar.php");
 require_once("database_class.php");
 require_once("schedule.php");
 require_once("login_check.php");
+
+//表示するyearとmonthを定める
 $year=date("Y");
 $month=date("m");
-
 if(isset($_POST["month"])){
 	$month=$_POST["month"];
 }
@@ -28,23 +29,24 @@ if(isset($_POST["next"])){
 }else if(isset($_POST["now"])){
 	$method="now";
 }
+
+//次や前、今月ボタンを押したときの年月計算
 $year=turnCalendar($year,$month,$method)[0];
 $month=turnCalendar($year,$month,$method)[1];
 
+//年月の日数計算
 $day=num_month($year,$month);
 
+//$name,$user_idの初期化
 $name="noname";
 $user_id="noid";
+
+//ログイン状態のとき$nameと$user_idを取得
 if(isset($_SESSION)){
-$name=$_SESSION["NAME"].$_SESSION["FIRSTNAME"];
-$user_id=$_SESSION["ID"];
+	$name=$_SESSION["NAME"].$_SESSION["FIRSTNAME"];
+	$user_id=$_SESSION["ID"];
 }else{
-	
 }
-
-
-
-
 
 ?>
 
@@ -65,6 +67,7 @@ if(col=="red"){
 }
 
 function inputSchedule(){
+	//月のカレンダーを出力
 	
 	var i=0;
 	for(i=0;i< <?php echo $day; ?> ;i++){
@@ -103,7 +106,7 @@ function inputSchedule(){
 <div>
 <table border="/">
 <tr><?php echo  $year."年".$month. " 月"; ?>
-
+<?php //echo $month; ?>
 <form method="post" action="">
 <input type="submit" name="prev" value="前の月"  /> 
 <input type="submit" name="next" value="次の月"  /> 
@@ -127,35 +130,28 @@ function inputSchedule(){
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	
-/*
-$column="shift_data";
-$where=" user_id ="."\"".$user_id."\"";
-$arr=$db->select($table,$column, $where);
-$arr=scheduleToArray($arr);
-	*/
-	
 	
 	//提出された場合
 	if(isset($_POST["schedule_worker"])){
 			
 		//データベースのシフトデータの更新
 		$column="shift_data";
-		$where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $month;
+		$where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $_POST["month_submit"];
 		$col="shift_data";//insertするcolumn指定
 		$shift_data=implode("," , $_POST["schedule_worker"]);//insertするvalue指定
 		$data="\"".$shift_data."\"";
-		echo $db->update2($table,$col,$data,$where);
+		$db->update2($table,$col,$data,$where);
 		
-		//２ヶ月前のデータ更新
-		$upd=operationCalendar($year,$month,-2);
+		//２ヶ月前のデータ更新(シフトをゼロにする)
+		$upd=operationCalendar(date("Y"),date("m"),-2);
 		$where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $upd[1];
 		$zero_arr=array();
 		for($i=0;$i<num_month($upd[0],$upd[1]);$i++){
 			$zero_arr[]=0;
 		}
-		$zero_data=implode("," , $upd);//insertするvalue指定
+		$zero_data=implode("," , $zero_arr);//insertするvalue指定
 		$data="\"".$zero_data."\"";
-		echo $db->update2($table,$col,$data,$where);
+		$db->update2($table,$col,$data,$where);
 	
 	}
 
@@ -212,7 +208,8 @@ $db=new database();
 $table="shift_submit";//テーブル名指定	
 
 $column="shift_data";
-$where=" user_id ="."\"".$user_id."\"";
+//$where=" user_id ="."\"".$user_id."\"";
+$where=" user_id ="."\"".$user_id."\"". " AND shift_month=". $month;
 $arr=$db->select($table,$column, $where);
 $arr=scheduleToArray($arr);
 for($i=0;$i<$day;$i++){
@@ -224,7 +221,6 @@ for($i=0;$i<$day;$i++){
 			echo "<input type=\"hidden\" name=\"schedule_worker[]\" value=0>";
 		}
 	}else{
-		
 		echo "<input type=\"hidden\" name=\"schedule_worker[]\" value=0>";
 	}
 	
@@ -232,6 +228,7 @@ for($i=0;$i<$day;$i++){
 
 	
 ?>
+<input type="hidden" name="month_submit" value=<?php  echo $month; ?>>
 <input type="submit" name="submit" value="提出" onClick="alert('シフトを提出しました。');" /> 
 </form>
 <button  onclick="location.href='logout.php'">ログアウト</button>

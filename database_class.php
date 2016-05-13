@@ -26,9 +26,7 @@ class database {
 					." VALUES ( "
 					.$data
 					." ) ";
-               		
-
-			echo "  <br>";
+					echo "  <br>";
 		$result = mysqli_query($this->link,$this->sql);
 		if(!$result){
 			echo "error" . mysqli_error($this->link);
@@ -54,7 +52,7 @@ class database {
 			.$table
 			.$whereSQL;
 		
-		//echo $this->sql . "<br>";
+		echo $this->sql . "<br>";
 		
 		$res=mysqli_query($this->link,$this->sql);
 		$data = array();

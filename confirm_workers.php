@@ -330,7 +330,7 @@ $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
   }
 
 //into regist_table
-mysql_set_charset('utf8');
+//mysql_set_charset('utf8');
 $sql = "INSERT INTO regist( FamilyName,
                             FirstName,
                             FamilyName_kana,
@@ -367,7 +367,7 @@ $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');
      echo "inncorect";
   }
 //into workers
-mysql_set_charset('utf8');
+//mysql_set_charset('utf8');
 $sql = "INSERT INTO workers( FamilyName,
                             FirstName,
                             FamilyName_kana,
