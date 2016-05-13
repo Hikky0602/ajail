@@ -323,7 +323,7 @@ $sex  = $dataArr["sex"];
 $ID   = $dataArr["ID"];
 $password = $hs->to_hash($dataArr["password1"]);
 $shop = $dataArr["shop"];
-$_SESSION[USERID]= $ID;
+$_SESSION["USERID"]= $ID;
 //echo $tel . "<br>"; 
 
 $link = mysqli_connect('localhost' ,'user' ,'password', 'Akifarm_db');

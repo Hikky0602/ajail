@@ -112,7 +112,7 @@ class database {
 		//返り値 select結果
 	
 
-                $this->sql=" UPDATE " . $table . " SET " . $setcol . " = " . $value1 . " WHERE " . $wherecol . " = '" . $value2  ."'";   
+                $this->sql=" UPDATE " . $table . " SET " . $setcol . " = '" . $value1 . "' WHERE " . $wherecol . " = '" . $value2  ."'";   
                 $result = mysqli_query($this->link, $this->sql);
                 echo $this->sql;
                 if(!$result){

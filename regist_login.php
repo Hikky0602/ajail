@@ -54,7 +54,7 @@ $password=$hs->to_hash($_POST["password"]);
 $_SESSION["Pass"] = $password;
 $_SESSION["Pass_Raw"] = $_POST["password"];
 $_SESSION["USERID"] = $_POST["userid"];
-//echo ($_SESSION[Pass_Raw"])
+//echo ($_SESSION["USERID"]);
 
 if($counts>=1){  //データベースに同じIDの情報があった時
 
