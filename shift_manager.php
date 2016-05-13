@@ -7,7 +7,7 @@
 require_once("shiibashi.php");
 require_once("database_class.php");
 require_once("calendar.php");
-require_once("login_check.php");
+//require_once("login_check.php");
 
 
 ///表示するyearとmonthを定める
@@ -34,14 +34,14 @@ $year=turnCalendar($year,$month,$method)[0];
 $month=turnCalendar($year,$month,$method)[1];
 
 $db=new database();
-$table="shift_submit";//テーブル名指定	
+$table="shift_submit JOIN regist ON shift_submit.user_id=regist.User_ID";//テーブル名指定	
 
 //月に提出されたデータをすべて取り出す
-$where=" shift_month=". $month;
+$where="shift_month= ".$month;
 $column="";
 $arr=$db->select($table,$column, $where);
 
-$sql="SELECT * FROM shift_submit JOIN regist ON shift_submit.user_id=regist.User_ID WHERE shift_month= ".$month;
+//$sql="SELECT * FROM shift_submit JOIN regist ON shift_submit.user_id=regist.User_ID WHERE shift_month= ".$month;
 
 
 
@@ -182,7 +182,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 			}		
 		}
 	
-	//DBから勤続年数を計算する仕様にできていない。
+	//勤続年数の設定
 		for($i=0;$i<$person;$i++){
 			//人iの勤続年数を入力
 			$year[$i]=$i+1;

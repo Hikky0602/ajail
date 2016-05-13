@@ -6,7 +6,7 @@
 require_once("database_class.php");
 require_once("calendar.php");
 require_once("login_check.php");
- require_once("calendar.php");
+ //require_once("calendar.php");
  
 
  ///表示するyearとmonthを定める
@@ -37,14 +37,19 @@ $month=turnCalendar($year,$month,$method)[1];
 $db=new database();
 $table="shift_fix";//テーブル名指定	
 
-$where=" shift_month=". $month;
+$db=new database();
+$table="shift_submit JOIN regist ON shift_submit.user_id=regist.User_ID";//テーブル名指定	
+
+//月に提出されたデータをすべて取り出す
+$where=" shift_month= ".$month;
 $column="";
 $arr=$db->select($table,$column, $where);
+
+//$sql="SELECT * FROM shift_submit JOIN regist ON shift_submit.user_id=regist.User_ID WHERE shift_month= ".$month;
 
 
 $person=count($arr);
 $shift=explode(',',$arr[0]["shift_data"]);
-
 $day=num_month($year,$month);
 $shop=array("A","B","C");
 ?>
@@ -82,7 +87,7 @@ $shop=array("A","B","C");
 	for($i=0;$i<$person;$i++){
 		//人の出力
 		echo "<tr>";
-		echo "<td>".$arr[$i]["name"];
+		echo "<td>".$arr[$i]["FamilyName"]." ".$arr[$i]["FirstName"];
 		$shift=explode(',',$arr[$i]["shift_data"]);
 		for($j=0;$j<$day;$j++){
 			//表データボタン作成
