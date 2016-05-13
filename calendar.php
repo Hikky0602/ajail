@@ -95,6 +95,13 @@ function turnCalendar($year,$month,$method){
 		$arr[1]=$month;
 	}
 	
+	$distance=(date("Y")-$year)*(12-date("m"))+($month-date("m"));
+	if($distance<-2){
+		$arr[0]=date("Y");
+	}else if($distance>8){
+		$arr[0]=date("Y");
+	}
+	
 
 	
 	return $arr; 

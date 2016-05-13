@@ -9,12 +9,38 @@
 <?php 
 require_once("shiibashi.php");
 require_once("database_class.php");
-//require_once("login_check.php");
+require_once("calendar.php");
+require_once("login_check.php");
+
+
+
+$year=date("Y");
+$month=date("m");
+
+if(isset($_POST["month"])){
+	$month=$_POST["month"];
+}
+if(isset($_POST["year"])){
+	$year=$_POST["year"];
+}
+
+$method="";
+if(isset($_POST["next"])){
+	$method="next";
+}else if(isset($_POST["prev"])){
+	$method="prev";
+}else if(isset($_POST["now"])){
+	$method="now";
+}
+$year=turnCalendar($year,$month,$method)[0];
+$month=turnCalendar($year,$month,$method)[1];
+
+
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	
 
-$where="";
+$where=" shift_month=". $month;
 $column="";
 $arr=$db->select($table,$column, $where);
 
@@ -23,8 +49,10 @@ $arr=$db->select($table,$column, $where);
 $person=count($arr);
 //$day=31;	//日数（仮）
 $shift=explode(',',$arr[0]["shift_data"]);
-$day=count($shift);
-$shop=array("A","B","C");	//店舗配列
+//$day=count($shift);
+$day=num_month($year,$month);
+$shop=array("A","B","C");
+
 
 ?>
 
@@ -104,10 +132,22 @@ function setColor(i){
 
 </head>
 <body>
+<?php echo $year."年 ".$month."月 ";  ?>
+<br>
+<form method="post" action="">
+<input type="submit" name="prev" value="前の月"  /> 
+<input type="submit" name="next" value="次の月"  /> 
+<input type="submit" name="now" value="今月"  /> 
+<input type="hidden" name="month" value=<?php  echo $month; ?>>
+<input type="hidden" name="year" value=<?php  echo $year; ?>>
+</form>
+
+
 
 <table border="/">
 <tr>schedule
 <th>名前
+
 
 
 <form  action="" name="b2">
@@ -138,6 +178,7 @@ if(isset($_POST["schedule"])){//makeボタンを押されたらtrue
 			}		
 		}
 	
+	//DBから勤続年数を計算する仕様にできていない。
 		for($i=0;$i<$person;$i++){
 			//人iの勤続年数を入力
 			$year[$i]=$i+1;

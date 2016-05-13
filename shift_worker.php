@@ -9,7 +9,7 @@
 require_once("calendar.php");
 require_once("database_class.php");
 require_once("schedule.php");
-//require_once("login_check.php");
+require_once("login_check.php");
 $year=date("Y");
 $month=date("m");
 
@@ -123,7 +123,7 @@ function inputSchedule(){
 
 <form method ="post" action="" name="b1" class="squareBt">
 <?php
-
+//SQL文で最後に\Gを加えると列ごとに表示
 
 $db=new database();
 $table="shift_submit";//テーブル名指定	

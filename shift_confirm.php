@@ -5,37 +5,25 @@
 <?php
 require_once("database_class.php");
 require_once("calendar.php");
-//require_once("login_check.php");
+require_once("login_check.php");
+ require_once("calendar.php");
  
-$year=date("Y");
-$month=date("m");
-$day=num_month($year,$month);
-$shop=array("A","B","C");
 
 $db=new database();
-$table="shift_fix";
-$column="";//アスタリスクになる
-$where=" delete_flg =0";
+$table="shift_submit";//テーブル名指定	
+
+$where=" shift_month=". $month;
+$column="";
 $arr=$db->select($table,$column, $where);
+
+）
 $person=count($arr);
-//$day=31;	//日数（仮）
 $shift=explode(',',$arr[0]["shift_data"]);
-$day=count($shift);
+
+$day=num_month($year,$month);
+$shop=array("A","B","C");
 ?>
-<?php 
-/*
-function compare_row($matrix , $str, $j){
-	//matrixのj番目の列でstrと書かれているものを返す
-	$result="";
-	for($i=0;$i<count($matrix);$i++){
-		if($matrix[$i][$j]==$str){
-			$result=$result."<br>".$str;
-		}
-	}
-	return $result;
-}
-*/
-?>
+
 
 
 
@@ -45,7 +33,17 @@ function compare_row($matrix , $str, $j){
 
 <br>
 <br>
-<?php echo $arr[0]["shift_year"]."年  ".$arr[0]["shift_month"]."月"   ?>
+<?php echo $year."年 ".$month."月 ";  ?>
+<br>
+<form method="post" action="">
+<input type="submit" name="prev" value="前の月"  /> 
+<input type="submit" name="next" value="次の月"  /> 
+<input type="submit" name="now" value="今月"  /> 
+<input type="hidden" name="month" value=<?php  echo $month; ?>>
+<input type="hidden" name="year" value=<?php  echo $year; ?>>
+</form>
+
+
 <table border="/">
 <th>名前
 
@@ -75,32 +73,7 @@ function compare_row($matrix , $str, $j){
 		}
 	echo"</tr>";
 	}	
-	
-	/*
-	for ($j=0;$j<$day;$j++ ){
-		//dayの出力
-		echo "<th>".($j+1);
-	}
-	$shift=array();
-	for($i=0;$i<$person;$i++){	
-			$shift[]=explode(',',$arr[$i]["shift_data"]);	
-	}
-	var_dump($shift);
-	for($s=0;$s<count($shop);$s++){
-		echo "<tr>";
-		echo "<td>".$shop[$s];
-		
-		for($j=0;$j<$day;$j++){
-			//表データボタン作成
-			echo "<td>";
-			//echo "compare_row($shift,$shop[$s],$j)"; 
-			
-			echo "<br>";
-		}
-	echo"</tr>";
-		
-	}
-	*/
+
 
 ?>
 </table>
