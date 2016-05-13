@@ -49,7 +49,6 @@ Password varchar(255) not null
 ########しいばしが作ったテーブル（シフト管理）#################################
 CREATE TABLE shift_submit (
 		shift_id int unsigned not null auto_increment,
-		name varchar(20) not null,
 		user_id varchar(20) not null,
 		shift_year int(4) not null,
 		shift_month int(2) not null,
@@ -61,7 +60,6 @@ CREATE TABLE shift_submit (
 	
 CREATE TABLE shift_fix(
 		id int unsigned not null auto_increment,
-		name varchar(20) not null,
 		user_id varchar(20) not null,
 		shift_year int(4) not null,
 		shift_month int(2) not null,

@@ -123,7 +123,7 @@ class database {
 	        }
          }
 		 
-		          public function update2($table, $setcol, $value1, $where){
+		public function update2($table, $setcol, $value1, $where){
 		/* $table・・・DB内の$tableテーブル
 		** $setcol・・・valueの値を変えたいカラム
 		** $valu1・・・変えたい値
@@ -143,6 +143,8 @@ class database {
                     return true;
 	        }
          }
+		 
+			
 
 }
 
