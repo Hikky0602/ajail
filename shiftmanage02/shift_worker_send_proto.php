@@ -7,7 +7,9 @@ $month = $monthNow;
 $year = $yearNow;
 
 if(isset($_POST["month"])){
+	
 	$monthPost = $_POST["month"][0];
+	
 	if($month-$monthPost>3){
 		$year = $yearNow + 1;
 		$month = $monthPost;
@@ -37,7 +39,6 @@ $startDay = date_id($year, $month, 1);
 <link rel="stylesheet" type="text/css" href="shift_proto.css"/>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
 <script type="text/javascript" src="./shift_proto.js"></script> 
-
 </head>
 
 
@@ -78,7 +79,7 @@ for($i=0, $count=0; $i<$day; $i++, $count++){
 			$count++;
 		}
 	}
-	echo '<td><button type="checkbox" class="NGbutton" name="schedule[]" value='.$i .'>'.($i+1).'</button></td>';
+	echo '<td><input type="checkbox" class="NGbutton" name="schedule[]" value='.$i .' >'.($i+1).'</td>';
 	if($count==6){
 		echo '</tr>';
 		$count=-1;
@@ -87,12 +88,12 @@ for($i=0, $count=0; $i<$day; $i++, $count++){
 
 </table>
 
-<input type="hidden" name="month" value="<?php echo $month; ?>">
+<input type="hidden" name="month[]" value="<?php echo $month; ?>">
 <input type="submit" name="submit" value="提出">
 </form>
 
 	
-
+<button onclick="location.href='shift_manager_proto.php'">確認</button>
 
 
 </body>

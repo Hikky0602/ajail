@@ -32,7 +32,7 @@ require_once("shift_worker_send_proto.php");
 if(isset($_POST["submit"])){
 	echo "提出完了";
 	$id = $_COOKIE["id"];
-	$month = $_POST['month'];
+	$month = $_POST['month'][0];
 
 	$schedule_post=array();
 	for($i=0;$i<30;$i++){
