@@ -1,0 +1,58 @@
+***************************
+データベース作成
+***************************
+CREATE DATABASE Akifarm_db default character set utf8;
+GRANT ALL privileges on Akifarm_db. * to user@'localhost' identified by 'password' with grant option;
+
+
+
+***************************
+テーブル作成
+user_ploto
+	id			ログインid
+	name		名前
+shift_submit_proto
+	id			ログインid
+	month		月
+	shift_data	提出されたシフトデータ
+***************************
+CREATE TABLE user_ploto(id varchar(40) not null, name varchar(40) not null);
+CREATE TABLE shift_submit_proto(id varchar(40) not null, month int not null,shift_data text not null);
+
+
+***************************
+アカウント作成
+sumtrue
+motty
+***************************
+insert into user_ploto (id, name) Values ('sumtrue', 'Inoue');
+insert into user_ploto (id, name) Values ('motty', 'Hikimochi');
+
+***************************
+テーブル初期化
+***************************
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '1', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '2', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '3', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '4', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '5', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '6', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '7', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '8', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '9', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '10', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '11', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('sumtrue', '12', '0,0');
+
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '1', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '2', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '3', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '4', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '5', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '6', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '7', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '8', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '9', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '10', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '11', '0,0');
+insert into shift_submit_proto (id, month, shift_data) Values ('motty', '12', '0,0');

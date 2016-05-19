@@ -1,7 +1,7 @@
 @charset 'utf8';
 
 #container{
-	width:	1000px;
+	width:	960px;
 	text-align:	center;
 	margin: auto;
 }
@@ -12,20 +12,25 @@
 }
 
 #border{
-	color:  #FFF;
-	background-color:   #605020;
- 	margin: 20 0 10 0;
+	color:  #F5F5F5;
+	background-color:   #5EBABA;
+ 	margin: auto;
   	height: 40px;
 	font-size:	20px;
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #642), color-stop(0.65, #541), color-stop(0.65, #431), color-stop(1, #541));
+	display:	block;
+	vertical-align:	center;
 }
+
+#borderTxt{
+	margin:	30 auto;
+}
+
 #header{
-	color:	#FFF;
-	background-color:	#642;
+	color:	#F5F5F5;
+	background-color:	#5EBABA;
 	margin:	0 auto;
 	height:	60px;
 	vertical-align: middle;
-	background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #642), color-stop(0.65, #541), color-stop(0.65, #431), color-stop(1, #541));
 }
 
 #logo{
@@ -39,19 +44,20 @@
 	float: right;
 	font-size:	20px;
 	padding:	10px 30px;
-	background-color:	#F09040;
-	color:	#FFF;
+	background-color:	#FDC44F;
+	color:	#333333;
 	border-style:	none;
 	width:	120px;
 	margin-left: 300;
+	height:	60px;
 }
 
 #topPic{
 	clear:	both;
 	width:	900;
 	float:	center;
-	margin:	auto;
-	background-color:	"#fff";
+	margin:	20 auto 20 auto;
+	background-color:	"#f5f5f5";
 }
 
 #mainColumn{
@@ -63,20 +69,21 @@
 #osusume{
 	width:	auto;
 	float:	center;
-
+	margin:	20 auto 20 auto;
 }
 
 #sideColumn{
-	width:	300;
+	width:	260px;
 	float:	right;
 }
 
 .reserveBt{
-	background-color:	#5050C0;
-	color:	#FFF;
-	margin: auto;
+	background-color:	#93B8CA;
+	color:	#F5F5F5;
+	margin: 20 auto;
 	float:	center;
 	font-size:	20;
+	border:	0;
 }
 
 #under{
@@ -89,6 +96,7 @@ ul {
 }
 
 #map{
+	margin:	20 auto 20 auto;
 	width:	600;
 	height: 450;
 }
@@ -100,8 +108,8 @@ ul {
 	text-align: center;
 	position:	relative;
 	overflow:	hidden;
-	margin:	0 auto;
-	background-color:	"#FFF";
+	margin:	0 auto 20 auto;
+	background-color:	"#F5F5F5";
 }
 
 #loop ul{
@@ -204,10 +212,12 @@ body {
 	font-size: 100%;
 	line-height: 140%;
 	font-family: Arial,Helvetica,sans-serif;
-	color: #000;
+	color: #F5F5F5;
 	text-align: center;
-	background: #000;
+	background: #f5f5f5;
 }
+
+
 
 a:link { text-decoration:none; color: #000;}
 a:visited { text-decoration:none; color: #000;}
@@ -227,10 +237,6 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	margin: 0;
 	padding: 0;
 	border: 0;
-	vertical-align: baseline;
-	font-family: inherit;
-	font-style: inherit;
-	font-weight: inherit;
 /*	outline: 0;*/
 }
 
