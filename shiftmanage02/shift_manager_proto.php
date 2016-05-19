@@ -15,9 +15,10 @@ $res = mysqli_query($link, $query);
 
 
 
-
+<div>
 <table border=1>
 <tr><td>name</td>
+
 <?php for($i=1; $i<31; $i++){	echo "<td>$i</td>";}	?>
 </tr>
 
@@ -43,7 +44,7 @@ while($row = mysqli_fetch_assoc($res)){	?>
 
 
 </table>
-
+</div>
 </body>
 </html>
 
